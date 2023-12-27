@@ -3,8 +3,6 @@ import sys, os
 
 if os.name == 'nt':
     sys.path.insert(1, '..\\..\\src\\')
-else:
-    sys.path.insert(1, '../../src/')
 
 import gen_rulemanager as RM
 
