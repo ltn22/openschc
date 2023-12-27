@@ -434,20 +434,37 @@ class RuleManager:
             d = {"DeviceID": device, "SoR": []}
             self._ctxt.append(d)
 
+        if T_ACCESS_RIGHT in sor:
+            print (0/0)
+
         for n_rule in sor:
+            # a meta rule 
+            if T_ACCESS_RIGHT in n_rule and not T_RULEID in n_rule: # top level AC
+                # access right for the SoR
+                if n_rule[T_ACCESS_RIGHT] == T_AC_MODIFY:
+                    d["SoR"].append(n_rule)
+                    print(d)
+                continue
+
+            # a SCHC rule
             n_ruleID = n_rule[T_RULEID]
             n_ruleLength = n_rule[T_RULEIDLENGTH]
             left_aligned_n_ruleID = n_ruleID << (32 - n_ruleLength)
 
             overlap = False
             for e_rule in d["SoR"]: # check no overlaps on RuleID
-                left_aligned_e_ruleID = e_rule[T_RULEID] << (32 - e_rule[T_RULEIDLENGTH])
-                if left_aligned_e_ruleID == left_aligned_n_ruleID:
-                    dprint ("Warning; Rule {}/{} exists not inserted".format(bin(n_ruleID), n_ruleLength) )
-                    overlap = True
-                    break
+                if T_RULEID in e_rule: # ignore meta info such as access control
+                    left_aligned_e_ruleID = e_rule[T_RULEID] << (32 - e_rule[T_RULEIDLENGTH])
+                    if left_aligned_e_ruleID == left_aligned_n_ruleID:
+                        dprint ("Warning; Rule {}/{} exists not inserted".format(bin(n_ruleID), n_ruleLength) )
+                        overlap = True
+                        break
 
             if not overlap:
+                if T_ACCESS_RIGHT in n_rule:
+                    print("we have access control")
+            
+
                 if T_COMP in n_rule:
                     r = self._create_compression_rule(n_rule, device)
                     d["SoR"].append(r)
@@ -461,6 +478,10 @@ class RuleManager:
                         arule[T_RULEID] = n_rule[T_RULEID]
                         arule[T_RULEIDLENGTH] = n_rule[T_RULEIDLENGTH]
                         arule[T_NO_COMP] = []
+
+                        if T_ACCESS_RIGHT in nrule:
+                            arule[T_ACCESS_RIGHT] = nrule[T_ACCESS_RIGHT]
+
                         d["SoR"].append(arule)
                     else:
                         print ("Warning 'no compression' rule already exists")
@@ -474,6 +495,9 @@ class RuleManager:
         arule[T_RULEID] = nrule[T_RULEID]
         arule[T_RULEIDLENGTH] = nrule[T_RULEIDLENGTH]
         arule[T_FRAG] = {}
+
+        if T_ACCESS_RIGHT in nrule:
+            arule[T_ACCESS_RIGHT] = nrule[T_ACCESS_RIGHT]
 
         def _default_value (ar, nr, idx, default=None, failed=False):
             if failed and not idx in nr[T_FRAG][T_FRAG_PROF]:
@@ -563,6 +587,9 @@ class RuleManager:
         arule[T_RULEID] = nrule[T_RULEID]
         arule[T_RULEIDLENGTH] = nrule[T_RULEIDLENGTH]
 
+        if T_ACCESS_RIGHT in nrule:
+            arule[T_ACCESS_RIGHT] = nrule[T_ACCESS_RIGHT]
+
         if T_ACTION in nrule:
              print ("Warning: using experimental Action")
              arule[T_ACTION] = nrule[T_ACTION]
@@ -634,6 +661,10 @@ class RuleManager:
                 raise ValueError("{} CDA not found".format(CDA))
             entry[T_CDA] = CDA
 
+            if T_ACCESS_RIGHT in r:
+                #/!\ verify values
+                entry[T_ACCESS_RIGHT] = r[T_ACCESS_RIGHT]
+
             arule[T_COMP].append(entry)
 
         if not T_META in arule:
@@ -679,6 +710,8 @@ class RuleManager:
             print ("Device:", dev["DeviceID"])
 
             for rule in dev["SoR"]:
+                if T_RULEID not in rule: # Access control info
+                    break
                 print ("/" + "-"*25 + "\\")
                 txt = str(rule[T_RULEID])+"/"+ str(rule[T_RULEIDLENGTH])
                 print ("|Rule {:8}  {:10}|".format(txt, self.printBin(rule[T_RULEID], rule[T_RULEIDLENGTH])))
@@ -965,13 +998,16 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
 
         self._sid_info.append(sid_values)
 
+    def clear_sid_conf(self):
+        self._sid_info = []
+
     def sid_search_for(self, name, space="data"):
 
         for s in self._sid_info:
             for e in s["items"]:
                 if e["identifier"] == name and e["namespace"]==space:
                     return e["sid"]
-        return None 
+        raise ValueError("Not found" +name)
 
     def sid_search_sid(self, value, short=False):
         """return YANG ID form a SID, if short is set to true, the module id is not concatenated."""
@@ -989,8 +1025,7 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                     else:
                         raise ValueError("not a good namespace", e["namespace"])
 
-        raise ValueError("Not found", value)
-        return None         
+        raise ValueError("Not found" + str(value))
 
     def openschc_id (self, yang_id):
         """return an OpenSCHC ID giving a yang ID stored in .sid files"""
@@ -1020,6 +1055,8 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                             function, so whenan union is found, it should be the array. The only test
                             is to check that int in the array or generate an error. """
                             return 'union'
+                        elif type(e['type']) is dict:
+                            return 'enumeration'
                     else: 
                         return "node" # this is not a leaf
         return None #yandid not found
@@ -1372,10 +1409,19 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
             #print ("Device:", dev["DeviceID"])
 
             rule_count = 0
+            access_right_cbor = None
             full_rules = b''
+            rule_content = None
             for rule in dev["SoR"]:
                 rule_count += 1
-                if T_COMP in rule:
+
+                if T_ACCESS_RIGHT in rule and not T_RULEID in rule:
+                    assert (access_right_cbor == None) # only one entry, RM add fails.
+                    access_right_cbor =  b'\x00' # /!\ dummy value just for test
+                    rule_count -= 1 # in YANG DM this record count on the other level
+
+
+                elif T_COMP in rule:
                     entry_sid = self.sid_search_for(name="/ietf-schc:schc/rule/entry", space="data")
                 
                     nb_entry = 0
@@ -1439,19 +1485,39 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                             cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/target-value", space="data") - entry_sid) + \
                             tv_cbor
                             nb_elm += 1
+
+                        if T_ACCESS_RIGHT in e:
+                            entry_cbor += \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/ietf-schc-access-control:ac-modify-field", space="data") - entry_sid) +\
+                                cbor.dumps(0)
+                            nb_elm += 1
  
                         entry_cbor = self.cbor_header (0b101_00000, nb_elm) + entry_cbor # header MAP and size
                         rule_content += entry_cbor
 
-                    rule_content = b'\xA4' + \
-                        cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry", space="data") - rule_sid) + \
-                        self.cbor_header(0b100_00000, nb_entry) + rule_content + \
-                        cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-value", space="data") - rule_sid) +\
-                        cbor.dumps(rule[T_RULEID]) +\
-                        cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-length", space="data") - rule_sid) +\
-                        cbor.dumps(rule[T_RULEIDLENGTH]) +\
-                        cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-nature", space="data") - rule_sid) +\
-                        cbor.dumps(self.sid_search_for(name= "nature-compression", space="identity")) 
+                    if not T_ACCESS_RIGHT in rule:
+                        rule_content = b'\xA4' + \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry", space="data") - rule_sid) + \
+                            self.cbor_header(0b100_00000, nb_entry) + rule_content + \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-value", space="data") - rule_sid) +\
+                            cbor.dumps(rule[T_RULEID]) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-length", space="data") - rule_sid) +\
+                            cbor.dumps(rule[T_RULEIDLENGTH]) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-nature", space="data") - rule_sid) +\
+                            cbor.dumps(self.sid_search_for(name= "nature-compression", space="identity")) 
+                    else:
+                        rule_content = b'\xA5' + \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry", space="data") - rule_sid) + \
+                            self.cbor_header(0b100_00000, nb_entry) + rule_content + \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-value", space="data") - rule_sid) +\
+                            cbor.dumps(rule[T_RULEID]) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-length", space="data") - rule_sid) +\
+                            cbor.dumps(rule[T_RULEIDLENGTH]) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-nature", space="data") - rule_sid) +\
+                            cbor.dumps(self.sid_search_for(name= "nature-compression", space="identity"))  +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-access-control:ac-modify-rule", space="data") - rule_sid) +\
+                            cbor.dumps(0)
+                                                  
                 elif T_FRAG in rule:
                     nb_elm = 3
                     rule_content = \
@@ -1461,6 +1527,12 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                         cbor.dumps(rule[T_RULEIDLENGTH]) +\
                         cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-nature", space="data") - rule_sid) +\
                         cbor.dumps(self.sid_search_for(name= "nature-fragmentation", space="identity")) 
+                    
+                    if T_ACCESS_RIGHT in rule:
+                        rule_content += \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-access-control:ac-modify-rule", space="data") - rule_sid) +\
+                            cbor.dumps(0)
+                        nb_elm += 1     
 
                     rule_content += \
                         cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/direction", space="data") - rule_sid) +\
@@ -1495,19 +1567,39 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                     
                     rule_content = self.cbor_header(0b101_00000, nb_elm) + rule_content
                 elif T_NO_COMP in rule:
-                    rule_content = rule_content = self.cbor_header(0b101_00000, 3) +\
-                        cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-value", space="data") - rule_sid) +\
-                        cbor.dumps(rule[T_RULEID]) +\
-                        cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-length", space="data") - rule_sid) +\
-                        cbor.dumps(rule[T_RULEIDLENGTH]) +\
-                        cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-nature", space="data") - rule_sid) +\
-                        cbor.dumps(self.sid_search_for(name= "nature-no-compression", space="identity")) 
+                    if T_ACCESS_RIGHT  in rule:
+                        rule_content = rule_content = self.cbor_header(0b101_00000, 3) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-value", space="data") - rule_sid) +\
+                            cbor.dumps(rule[T_RULEID]) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-length", space="data") - rule_sid) +\
+                            cbor.dumps(rule[T_RULEIDLENGTH]) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-nature", space="data") - rule_sid) +\
+                            cbor.dumps(self.sid_search_for(name= "nature-no-compression", space="identity")) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-access-control:ac-modify-rule", space="data") - rule_sid) +\
+                            cbor.dumps(0)
+                    else:
+                            rule_content = rule_content = self.cbor_header(0b101_00000, 3) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-value", space="data") - rule_sid) +\
+                            cbor.dumps(rule[T_RULEID]) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-length", space="data") - rule_sid) +\
+                            cbor.dumps(rule[T_RULEIDLENGTH]) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-nature", space="data") - rule_sid) +\
+                            cbor.dumps(self.sid_search_for(name= "nature-no-compression", space="identity")) 
                 else:
                     raise ValueError("unkwon rule")
 
-                full_rules += rule_content        
-            
-        coreconf = b'\xA1' + cbor.dumps(module_sid) + b'\xA1' + cbor.dumps(rule_sid - module_sid) 
+                if rule_content != None:
+                    full_rules += rule_content        
+
+        if access_right_cbor == None:               
+            coreconf = b'\xA1' + cbor.dumps(module_sid) + b'\xA1' + cbor.dumps(rule_sid - module_sid) 
+        else:
+            ac_sid = self.sid_search_for(name="/ietf-schc:schc/ietf-schc-access-control:ac-modify-set-of-rules", space="data")
+
+            coreconf = b'\xA1' + cbor.dumps(module_sid) + b'\xA2' + \
+                  cbor.dumps(ac_sid - module_sid) + access_right_cbor + \
+                  cbor.dumps(rule_sid - module_sid) 
+
 
         array_header = self.cbor_header(0b100_00000, rule_count) # array
 
@@ -1539,6 +1631,8 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
             elif node_type == "identifier":
                 sid_ref = self.sid_search_sid(jcc)
                 return sid_ref
+            elif node_type == "enumeration":
+                return 'no-changes'
             else:
                 raise ValueError(name_ref, node_type, "not a leaf")
 

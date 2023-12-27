@@ -1,8 +1,7 @@
 import sys, os
 # insert at 1, 0 is the script path (or '' in REPL)
 
-if os.name == 'nt':
-    sys.path.insert(1, '..\\..\\src\\')
+sys.path.insert(1, '../../src/')
 
 import gen_rulemanager as RM
 
@@ -18,15 +17,14 @@ rm    = RM.RuleManager()
 rm.Add(file="comp-rule-100.json", device="test:device1")
 rm.Print()
 
-
-
 rm.add_sid_file("ietf-schc@2022-12-19.sid")
 rm.add_sid_file("ietf-schc-oam@2021-11-10.sid")
 
 ycbor = rm.to_coreconf()
 print (binascii.hexlify(ycbor))
-pprint.pprint(cbor.loads(ycbor))
+print (len(ycbor))
 
+"""
 yr = rm.convert_to_json (cbor.loads(ycbor))
 pprint.pprint(yr)
 
@@ -129,3 +127,4 @@ intermediary_result = rm.manipulate_coreconf(device="test:device1", sid="/ietf-s
                                         keys=[10, 8],
                                         value={33: 8, 34: 10, 35: 1000090}, validate=dm) # 33: and 34: useless since in key
 rm.Print()
+""""

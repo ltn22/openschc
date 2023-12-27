@@ -13,6 +13,12 @@
 	    "namespace": "urn:ietf:params:xml:ns:yang:ietf-schc-oam",
 	    "revision": "2021-11-10",
 	    "conformance-type": "implement"
+	},
+	{
+	    "name": "ietf-schc-access-control",
+	    "namespace": "urn:ietf:params:xml:ns:yang:ietf-schc-access-control",
+	    "revision": "2023-02-14",
+	    "conformance-type": "implement"
 	}
     ]
 }

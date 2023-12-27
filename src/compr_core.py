@@ -153,6 +153,10 @@ T_POSITION_DEVICE = "device"
 T_INDEXES = "Indexes"
 T_CMD_INDIRECT = "INDIRECT"
 
+T_ACCESS_RIGHT = "access-right"
+T_AC_MODIFY = "modify-existing-element"
+
+
 """
 100000     module ietf-schc
 100001     identity ack-behavior-after-All0
