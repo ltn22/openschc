@@ -11,26 +11,28 @@ from gen_parameters import *
 import pprint
 
 # rdpcap comes from scapy and loads in our pcap file
-packets = rdpcap('trace_coap.pcap')
+packets = rdpcap('eap-edhoc_802-11_eap.cap')
 
 parser = Parser()
 
 # Let's iterate through every packet
 for packet in packets:
-    hexdump(packet[IPv6])
-    packet[IPv6].show()
+    hexdump(packet[EAPOL])
+    packet[EAPOL].show()
 
-    if packet[Ether].src == "fa:16:3e:1e:cc:2c":
+    if packet[Dot11].addr1 == "e8:94:f6:20:41:fd":
         direction = T_DIR_DW
-    elif packet[Ether].dst == "fa:16:3e:1e:cc:2c":
+    elif packet[Dot11].addr2 == "e8:94:f6:20:41:fd":
         direction = T_DIR_UP
     else: # skipping
+        print ("Direction unknown")
         break
 
     print ("Packet direction ", direction)
 
-    parsed = parser.parse (bytes(packet[IPv6]), 
+    parsed = parser.parse (bytes(packet[EAPOL]), 
                            direction, 
-                           layers=["IPv6", "UDP"])
+                           layers=["EAPOL", "EAP"],
+                           start="EAPOL" )
     pprint.pprint (parsed)
 

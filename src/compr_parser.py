@@ -231,6 +231,29 @@ class Parser:
 
                 #self.header_fields[T_COAP_OPT_END, 1] = [0xFF, 8]
                 pos += 1
+
+        if next_header == "EAPOL":
+            print ("EAPOL")
+            self.header_fields[T_EAPOL_VERSION, 1]        = [adapt_value(pkt[0]), 8]
+            self.header_fields[T_EAPOL_TYPE, 1]        = [adapt_value(pkt[1]), 8]
+            self.header_fields[T_EAPOL_LENGTH, 1]        = [adapt_value(pkt[2:4]), 16]
+
+            pos += 4
+            next_header = "EAP"
+
+        if next_header == "EAP":
+            self.header_fields[T_EAP_CODE, 1]        = [adapt_value(pkt[pos]), 8]
+            pos += 1
+            self.header_fields[T_EAP_ID, 1]        = [adapt_value(pkt[pos]), 8]
+            pos += 1
+            self.header_fields[T_EAP_LENGTH, 1]        = [adapt_value(pkt[pos:pos+2]), 16]
+            pos += 2
+
+            print (pos, len(pkt))
+            if pos < len(pkt):
+                self.header_fields[T_EAP_TYPE, 1]        = [adapt_value(pkt[pos]), 8]
+                pos += 1
+                
         return self.header_fields, pkt[pos:], None
 
 

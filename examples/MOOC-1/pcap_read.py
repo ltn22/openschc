@@ -2,7 +2,7 @@
 from scapy.all import *
 
 # rdpcap comes from scapy and loads in our pcap file
-packets = rdpcap('trace_coap.pcap')
+packets = rdpcap('eap-edhoc_802-11_eap.cap')
 
 for packet in packets:
     packet.show()
