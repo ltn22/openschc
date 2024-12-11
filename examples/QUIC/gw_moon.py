@@ -53,7 +53,7 @@ codeID = None
 tunnel = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 tunnel.bind(("0.0.0.0", PORT))
 
-schc_machine = SCHCProtocol(role=POSITION)           
+schc_machine = SCHCProtocol(role=POSITION, tunnel=tunnel)           
 schc_machine.set_rulemanager(rm)
 scheduler = schc_machine.system.get_scheduler()
 
