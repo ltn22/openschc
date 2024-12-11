@@ -26,6 +26,7 @@ def processPkt(pkt):
             if pkt[IP].proto == 17 and pkt[UDP].sport == 0x5C4C:
                 # got a packet in the socket
                 SCHC_pkt, device = tunnel.recvfrom(1000)
+                print (":")
 
                 other_end = 'udp:'+device[0]+':'+str(device[1])
 
