@@ -28,7 +28,7 @@ def processPkt(pkt):
             schc_machine.schc_send(bytes(pkt)[14:])
         elif e_type == 0x0800:
             print ('.', end="")
-            if pkt[IP].proto == 17 and pkt[UDP].dport == 0x5C4C:
+            if pkt[IP].proto == 17 and pkt[UDP].sport == 0x5C4C:
                 # got a packet in the socket
                 SCHC_pkt, device = tunnel.recvfrom(1000)
                 print ('-', end="")
