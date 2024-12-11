@@ -18,6 +18,9 @@ rm.Add(file="icmp-bi.json")
 rm.Print()
 
 def processPkt(pkt):
+    global coreID
+    global deviceID
+    global tunnel
 
     scheduler.run(session=schc_machine)
 
@@ -25,13 +28,13 @@ def processPkt(pkt):
         e_type = pkt.getlayer(Ether).type
         if e_type == 0x86dd:
             print ("*")
-            schc_machine.schc_send(bytes(pkt)[14:], verbose=True)
+            schc_machine.schc_send(bytes(pkt)[14:], core_id= verbose=True)
         elif e_type == 0x0800:
             print ('.', end="")
             if pkt[IP].proto == 17 and pkt[UDP].sport == 0x5C4C:
                 # got a packet in the socket
                 SCHC_pkt, device = tunnel.recvfrom(1000)
-                print ('-', end="")
+                coreID = 'udp'+device[0]+":"+str(device[1])
 
                 origin, full_packet = schc_machine.schc_recv(
                                    schc_packet=SCHC_pkt, 
@@ -45,6 +48,7 @@ addr = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 
 PORT = 8888
 deviceID = "udp:"+addr+":"+str(PORT)
+codeID = None
 
 tunnel = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 tunnel.bind(("0.0.0.0", PORT))
