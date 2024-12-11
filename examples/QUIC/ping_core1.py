@@ -21,6 +21,7 @@ def processPkt(pkt):
     if pkt.getlayer(Ether) != None: 
         e_type = pkt.getlayer(Ether).type
         if e_type == 0x86dd:
+            print ("*")
             schc_machine.schc_send(bytes(pkt)[14:])
         elif e_type == 0x0800:
             print ('.', end="")
