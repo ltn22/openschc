@@ -25,15 +25,13 @@ def processPkt(pkt):
         e_type = pkt.getlayer(Ether).type
         if e_type == 0x86dd:
             print ("*")
-            schc_machine.schc_send(bytes(pkt)[14:])
+            schc_machine.schc_send(bytes(pkt)[14:], verbose=True)
         elif e_type == 0x0800:
             print ('.', end="")
             if pkt[IP].proto == 17 and pkt[UDP].sport == 0x5C4C:
                 # got a packet in the socket
                 SCHC_pkt, device = tunnel.recvfrom(1000)
                 print ('-', end="")
-
-
 
                 origin, full_packet = schc_machine.schc_recv(
                                    schc_packet=SCHC_pkt, 
