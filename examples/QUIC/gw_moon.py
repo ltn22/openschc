@@ -9,7 +9,7 @@ import netifaces as ni
 
 import gen_rulemanager as RM
 from protocol import SCHCProtocol
-from gen_parameters import T_POSITION_CORE
+from gen_parameters import T_POSITION_DEVICE
 
 # Create a Rule Manager and upload the rules.
 
@@ -43,7 +43,7 @@ def processPkt(pkt):
                                    verbose=True)
 
 # Start SCHC Machine
-POSITION = T_POSITION_DEV
+POSITION = T_POSITION_DEVICE
 addr = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 
 PORT = 8888
