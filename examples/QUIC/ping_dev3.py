@@ -23,6 +23,7 @@ def processPkt(pkt):
         if e_type == 0x86dd:
             schc_machine.schc_send(bytes(pkt)[14:])
         elif e_type == 0x0800:
+            pkt.show()
             if pkt[IP].proto == 17 and pkt[UDP].sport == 0x5C4C:
                 # got a packet in the socket
                 SCHC_pkt, device = tunnel.recvfrom(1000)
