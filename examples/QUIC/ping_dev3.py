@@ -48,7 +48,6 @@ tunnel.bind((('0.0.0.0', 8888)))
 schc_machine = SCHCProtocol(role=POSITION)           
 schc_machine.set_rulemanager(rm)
 scheduler = schc_machine.system.get_scheduler()
-tunnel = schc_machine.set_tunnel(tunnel)
 
 sniff(prn=processPkt, iface=["eth0", "lo"]) 
 
