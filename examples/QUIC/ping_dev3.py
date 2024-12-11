@@ -31,7 +31,7 @@ def processPkt(pkt):
                 SCHC_pkt, device = tunnel.recvfrom(1000)
                 print (":")
 
-                other_end = 'udp:'+device[0]+':'+str(device[1])
+                other_end = 'udp:'+device[0]+':'+str(8888)
 
                 origin, full_packet = schc_machine.schc_recv(
                                    schc_packet=SCHC_pkt, 
