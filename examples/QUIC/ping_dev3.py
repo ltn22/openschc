@@ -4,6 +4,8 @@ sys.path.insert(1, '../../src/')
 
 from scapy.all import *
 
+import socket
+
 import gen_rulemanager as RM
 from protocol import SCHCProtocol
 from gen_parameters import T_POSITION_CORE
@@ -40,10 +42,13 @@ def processPkt(pkt):
 # Start SCHC Machine
 POSITION = T_POSITION_CORE
 
+tunnel = socket.socket (socket.AF_INET, socket.SOCK_DGRAM)
+tunnel.bind((('0.0.0.0', 8888)))
+
 schc_machine = SCHCProtocol(role=POSITION)           
 schc_machine.set_rulemanager(rm)
 scheduler = schc_machine.system.get_scheduler()
-tunnel = schc_machine.get_tunnel()
+tunnel = schc_machine.set_tunnel(tunnel)
 
 sniff(prn=processPkt, iface=["eth0", "lo"]) 
 
