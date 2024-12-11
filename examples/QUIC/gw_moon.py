@@ -43,7 +43,7 @@ def processPkt(pkt):
                                    verbose=True)
 
 # Start SCHC Machine
-POSITION = T_POSITION_DEVICE
+POSITION = T_POSITION_DEV
 addr = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
 
 PORT = 8888
