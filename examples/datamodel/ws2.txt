@@ -1,0 +1,17 @@
+No.     Time           Source                Destination           Protocol Length Info
+    347 155.628619440  fd00::5a3b:3921:7baf:6050 2001:41d0:302:2200::13b3 CoAP     123    CON, MID:14932, GET, TKN:a5 e5, coap://user.plido.net/temperature/max?date=today&unit=cel
+
+Frame 347: 123 bytes on wire (984 bits), 123 bytes captured (984 bits) on interface enp0s8, id 0
+Ethernet II, Src: PCSSystemtec_37:1e:3f (08:00:27:37:1e:3f), Dst: 52:56:00:00:00:02 (52:56:00:00:00:02)
+Internet Protocol Version 6, Src: fd00::5a3b:3921:7baf:6050, Dst: 2001:41d0:302:2200::13b3
+User Datagram Protocol, Src Port: 43059, Dst Port: 5683
+Constrained Application Protocol, Confirmable, GET, MID:14932
+
+0000  52 56 00 00 00 02 08 00 27 37 1e 3f 86 dd 60 0b   RV......'7.?..`.
+0010  bd 07 00 45 11 40 fd 00 00 00 00 00 00 00 5a 3b   ...E.@........Z;
+0020  39 21 7b af 60 50 20 01 41 d0 03 02 22 00 00 00   9!{.`P .A..."...
+0030  00 00 00 00 13 b3 a8 33 16 33 00 45 07 3a 42 01   .......3.3.E.:B.
+0040  3a 54 a5 e5 3d 01 75 73 65 72 2e 70 6c 69 64 6f   :T..=.user.plido
+0050  2e 6e 65 74 30 5b 74 65 6d 70 65 72 61 74 75 72   .net0[temperatur
+0060  65 03 6d 61 78 4a 64 61 74 65 3d 74 6f 64 61 79   e.maxJdate=today
+0070  08 75 6e 69 74 3d 63 65 6c 21 3c                  .unit=cel!<

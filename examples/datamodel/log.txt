@@ -1,0 +1,6 @@
+            +--rw schc-opt:entry-option-space* [space-id option-value field-position direction-indicator]
+                 +--rw schc-opt:space-id                    space-type
+                 +--rw schc-opt:option-value                uint32
+                 +--rw schc-opt:field-length                union
+                 +--rw schc-opt:field-position              uint8
+                 +--rw schc-opt:direction-indicator         schc:di-type

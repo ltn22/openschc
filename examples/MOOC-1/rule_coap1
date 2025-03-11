@@ -1,0 +1,69 @@
+****************************************
+Device: None
+/-------------------------\
+|Rule 5/3            101  |
+|---------------+---+--+--+------------------------------+-------------+----------------\
+|IPV6.VER       |  4| 1|BI|                            06|EQUAL        |NOT-SENT        |
+|IPV6.TC        |  8| 1|BI|                            00|IGNORE       |NOT-SENT        |
+|IPV6.FL        | 20| 1|BI|                            00|IGNORE       |NOT-SENT        |
+|IPV6.LEN       | 16| 1|BI|------------------------------|IGNORE       |COMPUTE-LENGTH  |
+|IPV6.NXT       |  8| 1|BI|                            11|EQUAL        |NOT-SENT        |
+|IPV6.HOP_LMT   |  8| 1|UP|                            01|IGNORE       |NOT-SENT        |
+|IPV6.HOP_LMT   |  8| 1|DW|                            32|IGNORE       |NOT-SENT        |
+|IPV6.DEV_PREFIX| 64| 1|BI|              fe80000000000000|MATCH-MAPPING|MAPPING-SENT    |
+:       .       : . :. :. :              200141d003022200:      .      :       .        :
+:       .       : . :. :. :              200141d004040200:      .      :       .        :
+|IPV6.DEV_IID   | 64| 1|BI|              0000000000003a86|EQUAL        |NOT-SENT        |
+|IPV6.APP_PREFIX| 64| 1|BI|              200141d004040200|MATCH-MAPPING|MAPPING-SENT    |
+:       .       : . :. :. :              200141d003022200:      .      :       .        :
+:       .       : . :. :. :              fe80000000000000:      .      :       .        :
+|IPV6.APP_IID   | 64| 1|BI|              00000000000013b3|EQUAL        |NOT-SENT        |
+|UDP.DEV_PORT   | 16| 1|BI|------------------------------|IGNORE       |VALUE-SENT      |
+|UDP.APP_PORT   | 16| 1|BI|                          1630|MSB(12)      |LSB             |
+|UDP.LEN        | 16| 1|BI|                            00|IGNORE       |COMPUTE-LENGTH  |
+|UDP.CKSUM      | 16| 1|BI|                            00|IGNORE       |COMPUTE-CHECKSUM|
+|COAP.VER       |  2| 1|BI|                            01|EQUAL        |NOT-SENT        |
+|COAP.TYPE      |  2| 1|UP|                            00|EQUAL        |NOT-SENT        |
+|COAP.TYPE      |  2| 1|DW|                            02|EQUAL        |NOT-SENT        |
+|COAP.TKL       |  4| 1|BI|                            02|EQUAL        |NOT-SENT        |
+|COAP.CODE      |  8| 1|UP|                            01|EQUAL        |NOT-SENT        |
+|COAP.CODE      |  8| 1|DW|                            45|EQUAL        |NOT-SENT        |
+|COAP.MID       | 16| 1|BI|------------------------------|IGNORE       |VALUE-SENT      |
+|COAP.TOKEN     |tkl| 1|BI|------------------------------|IGNORE       |VALUE-SENT      |
+|COAP.URI-HOST  |var| 1|UP|      757365722e61636b6c2e696f|EQUAL        |NOT-SENT        |
+|COAP.URI-PATH  |var| 1|UP|                      74696d65|EQUAL        |NOT-SENT        |
+\---------------+---+--+--+------------------------------+-------------+----------------/
+/-------------------------\
+|Rule 6/3            110  |
+|---------------+---+--+--+------------------------------+-------------+----------------\
+|IPV6.VER       |  4| 1|BI|                            06|EQUAL        |NOT-SENT        |
+|IPV6.TC        |  8| 1|BI|                            00|IGNORE       |NOT-SENT        |
+|IPV6.FL        | 20| 1|BI|                            00|IGNORE       |NOT-SENT        |
+|IPV6.LEN       | 16| 1|BI|------------------------------|IGNORE       |COMPUTE-LENGTH  |
+|IPV6.NXT       |  8| 1|BI|                            11|EQUAL        |NOT-SENT        |
+|IPV6.HOP_LMT   |  8| 1|UP|                            01|IGNORE       |NOT-SENT        |
+|IPV6.HOP_LMT   |  8| 1|DW|                            32|IGNORE       |NOT-SENT        |
+|IPV6.DEV_PREFIX| 64| 1|BI|              fe80000000000000|MATCH-MAPPING|MAPPING-SENT    |
+:       .       : . :. :. :              200141d003022200:      .      :       .        :
+:       .       : . :. :. :              200141d004040200:      .      :       .        :
+|IPV6.DEV_IID   | 64| 1|BI|              0000000000003a86|EQUAL        |NOT-SENT        |
+|IPV6.APP_PREFIX| 64| 1|BI|              200141d004040200|MATCH-MAPPING|MAPPING-SENT    |
+:       .       : . :. :. :              200141d003022200:      .      :       .        :
+:       .       : . :. :. :              fe80000000000000:      .      :       .        :
+|IPV6.APP_IID   | 64| 1|BI|              00000000000013b3|EQUAL        |NOT-SENT        |
+|UDP.DEV_PORT   | 16| 1|BI|------------------------------|IGNORE       |VALUE-SENT      |
+|UDP.APP_PORT   | 16| 1|BI|                          1630|MSB(12)      |LSB             |
+|UDP.LEN        | 16| 1|BI|                            00|IGNORE       |COMPUTE-LENGTH  |
+|UDP.CKSUM      | 16| 1|BI|                            00|IGNORE       |COMPUTE-CHECKSUM|
+|COAP.VER       |  2| 1|BI|                            01|EQUAL        |NOT-SENT        |
+|COAP.TYPE      |  2| 1|UP|                            00|EQUAL        |NOT-SENT        |
+|COAP.TYPE      |  2| 1|DW|                            02|EQUAL        |NOT-SENT        |
+|COAP.TKL       |  4| 1|BI|                            02|EQUAL        |NOT-SENT        |
+|COAP.CODE      |  8| 1|UP|                            03|EQUAL        |NOT-SENT        |
+|COAP.CODE      |  8| 1|DW|                            44|EQUAL        |NOT-SENT        |
+|COAP.MID       | 16| 1|BI|------------------------------|IGNORE       |VALUE-SENT      |
+|COAP.TOKEN     |tkl| 1|BI|------------------------------|IGNORE       |VALUE-SENT      |
+|COAP.URI-HOST  |var| 1|UP|      757365722e61636b6c2e696f|EQUAL        |NOT-SENT        |
+|COAP.URI-PATH  |var| 1|UP|                    6f74686572|EQUAL        |NOT-SENT        |
+|COAP.URI-PATH  |var| 2|UP|                    626c6f636b|EQUAL        |NOT-SENT        |
+\---------------+---+--+--+------------------------------+-------------+----------------/

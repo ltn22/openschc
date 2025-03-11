@@ -1,0 +1,19 @@
+[{
+    "RuleIDValue": 8,
+    "RuleIDLength": 1,
+    "Compression": [
+      {"FID": "COAP.VER",                            "DI": "DW", "TV": 1,         "MO": "equal","CDA": "not-sent"},
+      {"FID": "COAP.TYPE",                                       "TV": 0,         "MO": "equal","CDA": "not-sent"},
+      {"FID": "COAP.TKL",                            "DI": "DW", "TV": 0,         "MO": "equal","CDA": "not-sent"},
+      {"FID": "COAP.CODE",                                       "TV": 1,    "MO": "equal","CDA": "not-sent"},
+      {"FID": "COAP.MID",                                        "TV": 0,    "MO": "MSB", "MO.VAL": 7, "CDA": "LSB"},
+      {"FID": "COAP.Uri-Path",  "FL": "var", "FP": 1, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.Uri-Path",  "FL": "var", "FP": 2, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.Uri-Query", "FL": "var", "FP": 1, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.Uri-Query", "FL": "var", "FP": 2, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.Accept",                          "DI": "DW", "TV": 60 , "MO": "equal", "CDA": "not-sent"},
+      {"FID": "COAP.No-Response",                     "DI": "DW", "TV": 2 ,  "MO": "equal", "CDA": "not-sent"},
+      {"FID": "COAP.CSP82-Param",                     "DI": "DW",            "MO": "ignore","CDA": "value-sent"}
+    ]
+}
+]

@@ -1,0 +1,99 @@
+No.     Time           Source                Destination           Protocol Length Info
+    347 155.628619440  fd00::5a3b:3921:7baf:6050 2001:41d0:302:2200::13b3 CoAP     123    CON, MID:14932, GET, TKN:a5 e5, coap://user.plido.net/temperature/max?date=today&unit=cel
+
+Frame 347: 123 bytes on wire (984 bits), 123 bytes captured (984 bits) on interface enp0s8, id 0
+    Section number: 1
+    Interface id: 0 (enp0s8)
+        Interface name: enp0s8
+    Encapsulation type: Ethernet (1)
+    Arrival Time: Mar  5, 2025 10:39:38.847351732 UTC
+    UTC Arrival Time: Mar  5, 2025 10:39:38.847351732 UTC
+    Epoch Arrival Time: 1741171178.847351732
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 10.220608284 seconds]
+    [Time delta from previous displayed frame: 13.600529161 seconds]
+    [Time since reference or first frame: 155.628619440 seconds]
+    Frame Number: 347
+    Frame Length: 123 bytes (984 bits)
+    Capture Length: 123 bytes (984 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: eth:ethertype:ipv6:udp:coap]
+    [Coloring Rule Name: UDP]
+    [Coloring Rule String: udp]
+Ethernet II, Src: PCSSystemtec_37:1e:3f (08:00:27:37:1e:3f), Dst: 52:56:00:00:00:02 (52:56:00:00:00:02)
+    Destination: 52:56:00:00:00:02 (52:56:00:00:00:02)
+        Address: 52:56:00:00:00:02 (52:56:00:00:00:02)
+        .... ..1. .... .... .... .... = LG bit: Locally administered address (this is NOT the factory default)
+        .... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+    Source: PCSSystemtec_37:1e:3f (08:00:27:37:1e:3f)
+        Address: PCSSystemtec_37:1e:3f (08:00:27:37:1e:3f)
+        .... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+        .... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+    Type: IPv6 (0x86dd)
+Internet Protocol Version 6, Src: fd00::5a3b:3921:7baf:6050, Dst: 2001:41d0:302:2200::13b3
+    0110 .... = Version: 6
+    .... 0000 0000 .... .... .... .... .... = Traffic Class: 0x00 (DSCP: CS0, ECN: Not-ECT)
+        .... 0000 00.. .... .... .... .... .... = Differentiated Services Codepoint: Default (0)
+        .... .... ..00 .... .... .... .... .... = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+    .... 1011 1011 1101 0000 0111 = Flow Label: 0xbbd07
+    Payload Length: 69
+    Next Header: UDP (17)
+    Hop Limit: 64
+    Source Address: fd00::5a3b:3921:7baf:6050
+    Destination Address: 2001:41d0:302:2200::13b3
+User Datagram Protocol, Src Port: 43059, Dst Port: 5683
+    Source Port: 43059
+    Destination Port: 5683
+    Length: 69
+    Checksum: 0x073a [unverified]
+    [Checksum Status: Unverified]
+    [Stream index: 6]
+    [Timestamps]
+        [Time since first frame: 0.000000000 seconds]
+        [Time since previous frame: 0.000000000 seconds]
+    UDP payload (61 bytes)
+Constrained Application Protocol, Confirmable, GET, MID:14932
+    01.. .... = Version: 1
+    ..00 .... = Type: Confirmable (0)
+    .... 0010 = Token Length: 2
+    Code: GET (1)
+    Message ID: 14932
+    Token: a5e5
+    Opt Name: #1: Uri-Host: user.plido.net
+        Opt Desc: Type 3, Critical, Unsafe
+        0011 .... = Opt Delta: 3
+        .... 1101 = Opt Length: 13
+        Opt Length extended: 1
+        Uri-Host: user.plido.net
+    Opt Name: #2: Observe: 0
+        Opt Desc: Type 6, Elective, Unsafe
+        0011 .... = Opt Delta: 3
+        .... 0000 = Opt Length: 0
+        Observe: Register (0)
+    Opt Name: #3: Uri-Path: temperature
+        Opt Desc: Type 11, Critical, Unsafe
+        0101 .... = Opt Delta: 5
+        .... 1011 = Opt Length: 11
+        Uri-Path: temperature
+    Opt Name: #4: Uri-Path: max
+        Opt Desc: Type 11, Critical, Unsafe
+        0000 .... = Opt Delta: 0
+        .... 0011 = Opt Length: 3
+        Uri-Path: max
+    Opt Name: #5: Uri-Query: date=today
+        Opt Desc: Type 15, Critical, Unsafe
+        0100 .... = Opt Delta: 4
+        .... 1010 = Opt Length: 10
+        Uri-Query: date=today
+    Opt Name: #6: Uri-Query: unit=cel
+        Opt Desc: Type 15, Critical, Unsafe
+        0000 .... = Opt Delta: 0
+        .... 1000 = Opt Length: 8
+        Uri-Query: unit=cel
+    Opt Name: #7: Accept: application/cbor
+        Opt Desc: Type 17, Critical, Safe
+        0010 .... = Opt Delta: 2
+        .... 0001 = Opt Length: 1
+        Accept: application/cbor
+    [Uri-Path: coap://user.plido.net/temperature/max]

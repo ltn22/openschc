@@ -1,0 +1,25 @@
+****************************************
+Device: None
+/-------------------------\
+|Rule 5/3            101  |
+|---------------+---+--+--+------------------------------+-------------+----------------\
+|IPV6.VER       |  4| 1|BI|                            06|EQUAL        |NOT-SENT        |
+|IPV6.TC        |  8| 1|BI|                            00|EQUAL        |NOT-SENT        |
+|IPV6.FL        | 20| 1|DW|                        0a45f8|EQUAL        |NOT-SENT        |
+|IPV6.FL        | 20| 1|UP|                        07519f|EQUAL        |NOT-SENT        |
+|IPV6.LEN       | 16| 1|BI|------------------------------|IGNORE       |COMPUTE-LENGTH  |
+|IPV6.NXT       |  8| 1|BI|                            11|EQUAL        |NOT-SENT        |
+|IPV6.HOP_LMT   |  8| 1|BI|------------------------------|IGNORE       |VALUE-SENT      |
+|IPV6.DEV_PREFIX| 64| 1|BI|              fe80000000000000|MATCH-MAPPING|MAPPING-SENT    |
+:       .       : . :. :. :              200141d003022200:      .      :       .        :
+:       .       : . :. :. :              200141d004040200:      .      :       .        :
+|IPV6.DEV_IID   | 64| 1|BI|              0000000000003a86|EQUAL        |NOT-SENT        |
+|IPV6.APP_PREFIX| 64| 1|BI|              200141d004040200|MATCH-MAPPING|MAPPING-SENT    |
+:       .       : . :. :. :              200141d003022200:      .      :       .        :
+:       .       : . :. :. :              fe80000000000000:      .      :       .        :
+|IPV6.APP_IID   | 64| 1|BI|              00000000000013b3|EQUAL        |NOT-SENT        |
+|UDP.DEV_PORT   | 16| 1|BI|------------------------------|IGNORE       |VALUE-SENT      |
+|UDP.APP_PORT   | 16| 1|BI|                          1630|MSB(12)      |LSB             |
+|UDP.LEN        | 16| 1|BI|                            00|IGNORE       |COMPUTE-LENGTH  |
+|UDP.CKSUM      | 16| 1|BI|                            00|IGNORE       |COMPUTE-CHECKSUM|
+\---------------+---+--+--+------------------------------+-------------+----------------/
