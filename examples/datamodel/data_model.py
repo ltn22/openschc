@@ -52,7 +52,6 @@ ipv6_version_tv = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:
                                         keys= [5, 3, 5068, 1, 5018]) 
 pprint.pprint (ipv6_version_tv)
 
-
 print ("IPv6 VERSION VALUE")
 ipv6_version_value = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/target-value/value", 
                                         keys= [5, 3, 5068, 1, 5018, 0]) 

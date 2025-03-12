@@ -81,7 +81,37 @@ if parsed[0] != None:
             print("SCHC packet in hex")
             SCHC_pkt.display()
 
+# Now with Universal Option
 
+parsed = parser.parse(coap_message, T_DIR_DW, start="CoAP", universal_option=True)
+pprint.pprint (parsed[0])
 
+rm2    = RM.RuleManager(universal_option=True)
+rm2.Add(file="coap+UO.json", device="test:device1")
+rm2.Print()
 
-#   def FindRuleFromPacket(self, pkt, direction=T_DIR_BI, failed_field=False):
+if parsed[0] != None:
+        rule = rm2.FindRuleFromPacket(pkt=parsed[0], 
+                                     direction=T_DIR_DW, 
+                                     failed_field=True)    
+        print (rule)
+
+        if rule:
+            compress = Compressor()
+
+            SCHC_pkt2 = compress.compress(rule=rule,
+                                         parsed_packet=parsed[0],
+                                         data= parsed[1],
+                                         direction=T_DIR_DW,
+                                         verbose=True)
+            
+            print("SCHC packet in hex")
+            SCHC_pkt2.display()
+
+            print ("Same compression?", SCHC_pkt._content==SCHC_pkt2._content)
+
+rm2.add_sid_file("ietf-schc@2023-01-28.sid")
+rm2.add_sid_file("ietf-schc-opt@2024-12-19.sid")
+
+ycbor2 = rm2.to_coreconf()
+print(binascii.hexlify(ycbor2))

@@ -11,8 +11,8 @@
       {"FID": "COAP.Uri-Path",  "FL": "var", "FP": 2, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
       {"FID": "COAP.Uri-Query", "FL": "var", "FP": 1, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
       {"FID": "COAP.Uri-Query", "FL": "var", "FP": 2, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
-      {"FID": "COAP.Accept",                          "DI": "DW", "TV": 60 , "MO": "equal", "CDA": "not-sent"},
-      {"FID": "COAP.No-Response",                     "DI": "DW", "TV": 2 ,  "MO": "equal", "CDA": "not-sent"},
+      {"FID": "COAP.Accept",    "FL": 8,              "DI": "DW", "TV": 60 , "MO": "equal", "CDA": "not-sent"},
+      {"FID": "COAP.No-Response","FL": 8,             "DI": "DW", "TV": 2 ,  "MO": "equal", "CDA": "not-sent"},
       {"FID": "COAP.CSP82-Param",                     "DI": "DW",            "MO": "ignore","CDA": "value-sent"}
     ]
 }

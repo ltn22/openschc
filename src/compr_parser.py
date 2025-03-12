@@ -7,6 +7,7 @@ format is the following:
 since field ID can be repeated, the index is the tuple field ID and position.
 """
 
+from dataclasses import field
 from gen_base_import import *
 from gen_parameters import *  
 from gen_utils import *
@@ -222,13 +223,17 @@ class Parser:
                     pos += 1
                     # /!\ check if max length is reached
 
-                try:
-                    self.header_fields[option_names[option_number], field_position[option_number]] = [bytes(option_value), L*8,  "variable"]
-                except:
-                    print (binascii.hexlify(pkt))
-                    print ("position:", pos)
-                    print (self.header_fields)
-                    raise ValueError("CoAP Option {} not found".format(option_number))
+                if universal_option:
+                    option_name=f'COAP_OPTION:{option_number}'
+                    self.header_fields[option_name, field_position[option_number]] = [bytes(option_value), L*8,  "variable"]
+                else:
+                    try: # in RFC 9363 option has to be known
+                        self.header_fields[option_names[option_number], field_position[option_number]] = [bytes(option_value), L*8,  "variable"]
+                    except:
+                        print (binascii.hexlify(pkt))
+                        print ("position:", pos)
+                        print (self.header_fields)
+                        raise ValueError("CoAP Option {} not found".format(option_number))
 
             if(pos < len(pkt)):
                 assert int(pkt[pos]) == 0xFF # if data reamins, an 0xFF must be present
