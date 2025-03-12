@@ -37,7 +37,8 @@ option_names = {
     35: T_COAP_OPT_PROXY_URI,
     39: T_COAP_OPT_PROXY_SCHEME,
     60: T_COAP_OPT_SIZE1,
-    258: T_COAP_OPT_NO_RESP
+    258: T_COAP_OPT_NO_RESP,
+    2055: T_COAP_OPT_SCP82_PARAM
 }
 
 coap_options = {value: key for key, value in option_names.items()}
@@ -58,7 +59,7 @@ class Parser:
 
     def parse(self, pkt, direction, layers=["IPv6", "ICMP", "UDP", "CoAP"], 
               coap_port = 5683,
-              start="IPv6"):
+              start="IPv6", universal_option = False):
         """
         Parsing a byte array:
         - pkt is the bytearray to be parsed
@@ -75,9 +76,9 @@ class Parser:
         pos = 0
         self.header_fields = {}
 
-        next_header = start
+        next_layer = start
 
-        if  next_header == "IPv6" :
+        if  next_layer == "IPv6" :
             version = unpack ("!B", pkt[:1])
             #assert version[0]>>4 == 6                 # only IPv6
             if version[0]>>4 == 6 != 6:
@@ -194,8 +195,10 @@ class Parser:
                 if deltaT == 13:
                     deltaT = int(pkt[pos]) + 13
                     pos += 1
-                
-                # /!\ Larger value not implemented
+                if deltaT == 14:
+                    deltaT = (int(pkt[pos]) << 8) + int(pkt[pos+1]) + 269
+                    pos += 2
+               
 
                 option_number += int(deltaT)
 
@@ -203,8 +206,9 @@ class Parser:
                 if L == 13: 
                     L = int(pkt[pos]) + 13
                     pos += 1
-                # /!\ Larger value not implemented
-
+                 # /!\ Larger value not implemented
+               
+ 
                 # create a field_position counter if a field is repeated in the header
                 if option_number in field_position:
                     field_position[option_number] += 1

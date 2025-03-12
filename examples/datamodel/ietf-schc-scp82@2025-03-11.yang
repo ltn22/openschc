@@ -1,7 +1,8 @@
-module ietf-schc-rpc {
+
+module ietf-schc-scp82 {
   yang-version 1.1;
-  namespace "urn:ietf:params:xml:ns:yang:ietf-schc-rpc";
-  prefix schc-rpc;
+  namespace "urn:ietf:params:xml:ns:yang:ietf-schc-scp82";
+  prefix schc-scp82;
 
   import ietf-schc {
       prefix ietf-schc;
@@ -46,29 +47,21 @@ module ietf-schc-rpc {
      SCHC Ack and add the possibility to send several bitmaps in a single 
      answer.";
 
-  revision 2024-12-05 {
+  revision 2025-03-11 {
     description
       "Initial version for RFC YYYY ";
     reference
       "RFC YYYY: OAM";
   }
 
-  rpc duplicate-rule {
-        input {
-          container from {
-            uses ietf-schc:rule-id-type;
-          }
-          container to {
-            uses ietf-schc:rule-id-type;
-          }
-        }
-        output {
-          leaf status {
-            type string;
-          }
-        }
-      }
-  
+  identity fid-coap-option-scp82-param {
+       base ietf-schc:fid-coap-base-type;
+       description
+         "test for new options";
+       reference
+         "RFC 7252 The Constrained Application Protocol (CoAP)";
+     }
+
 
 
 }

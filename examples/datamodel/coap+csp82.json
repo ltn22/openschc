@@ -1,6 +1,6 @@
 [{
     "RuleIDValue": 8,
-    "RuleIDLength": 1,
+    "RuleIDLength": 8,
     "Compression": [
       {"FID": "COAP.VER",                            "DI": "DW", "TV": 1,         "MO": "equal","CDA": "not-sent"},
       {"FID": "COAP.TYPE",                                       "TV": 0,         "MO": "equal","CDA": "not-sent"},

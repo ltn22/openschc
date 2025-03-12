@@ -13,6 +13,11 @@
 	    "namespace": "urn:ietf:params:xml:ns:yang:ietf-schc-oam",
 	    "revision": "2021-11-10",
 	    "conformance-type": "implement"
+	}, 	{
+	    "name": "ietf-schc-scp82",
+	    "namespace": "urn:ietf:params:xml:ns:yang:ietf-schc-scp82",
+	    "revision": "2025-03-11",
+	    "conformance-type": "implement"
 	}
     ]
 }

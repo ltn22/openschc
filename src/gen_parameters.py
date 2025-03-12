@@ -76,7 +76,7 @@ T_COAP_OPT_PROXY_URI =  "COAP.PROXY-URI"
 T_COAP_OPT_PROXY_SCHEME =  "COAP.PROXY-SCHEME"
 T_COAP_OPT_SIZE1 =  "COAP.SIZE1"
 T_COAP_OPT_NO_RESP = "COAP.NO-RESPONSE"
-T_COAP_SCP82_PARAM = "COAP.CSP82-Param"
+T_COAP_OPT_SCP82_PARAM = "COAP.CSP82-PARAM"
 
 T_COAP_OPT_END = "COAP.End"
 
@@ -290,6 +290,7 @@ YANG_ID = {
     T_ICMPV6_IDENT: [None, "fid-icmpv6-identifier"],
     T_ICMPV6_SEQNO: [None, "fid-icmpv6-sequence"],
     T_ICMPV6_CKSUM: [None, "fid-icmpv6-checksum"],
+    T_COAP_OPT_SCP82_PARAM : [None, "fid-coap-option-scp82-param"]
 
 }
 

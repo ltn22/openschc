@@ -1,9 +1,14 @@
-import sys, os 
+import sys, os
+
 # insert at 1, 0 is the script path (or '' in REPL)
 
 sys.path.insert(1, '../../src/')
 
 import gen_rulemanager as RM
+from compr_parser import Parser
+from gen_parameters import T_DIR_DW 
+from compr_core import Compressor
+
 
 import pprint
 import binascii
@@ -21,6 +26,7 @@ rm.Print()
 
 rm.add_sid_file("ietf-schc@2023-01-28.sid")
 rm.add_sid_file("ietf-schc-oam@2021-11-10.sid")
+rm.add_sid_file("ietf-schc-scp82@2025-03-11.sid")
 
 ycbor = rm.to_coreconf()
 print (binascii.hexlify(ycbor))
@@ -39,92 +45,43 @@ print ("validation", inst.validate())
 print(dm.ascii_tree(no_types=True, val_count=True), end='')
 
 
-print ("FULL SET OF RULES")
-sor=rm.manipulate_coreconf(device="test:device1", sid=5095) # get full conf
-pprint.pprint (sor)
-
-print ("RULE 5/3")
-rule_5_3 = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule", keys= [5, 3]) # get full conf
-pprint.pprint (rule_5_3)
-
-print ("IPv6 VERSION TV")
-ipv6_version_tv = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/target-value", 
-                                        keys= [5, 3, 5068, 1, 5018]) 
-pprint.pprint (ipv6_version_tv)
-
-
-print ("IPv6 VERSION VALUE")
-ipv6_version_value = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/target-value/value", 
-                                        keys= [5, 3, 5068, 1, 5018, 0]) 
-pprint.pprint (ipv6_version_value)
-
-print ("APP PREFIX TV")
-app_prefix_tv = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/target-value", 
-                                        keys= [5, 3, 5057, 1, 5018, 0]) 
-pprint.pprint (app_prefix_tv)
-
 print ("APP PREFIX VALUE 1")
 app_prefix_tv = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/target-value/value", 
-                                        keys= [5, 3, 5057, 1, 5018, 1]) 
+                                        keys= [8, 1, 5028, 1, 5019, 0]) 
 pprint.pprint (app_prefix_tv)
 
-print ("URI QUERY MSB VAL")
-mo_tv = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/matching-operator-value/value", 
-                                        keys= [5, 3, 'fid-coap-option-uri-query', 1, 'di-up', 0]) 
-pprint.pprint (mo_tv)
 
-print ("SET HOP LIMIT")
-hop_limit_value = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/target-value/value", 
-                                        keys= [5, 3, 'fid-ipv6-hoplimit', 1, 'di-bidirectional', 0]) 
-pprint.pprint (hop_limit_value)
-hop_limit = int.from_bytes(list(hop_limit_value.values())[0], "big")
-hop_limit -= 1
-hop_limit_value = hop_limit.to_bytes(1, "big")
-print ("decrement value")
+coap_message_txt = "40 01 00 01 BD 01 61 63 63 65 6C 65 72 6F 6D 65" \
+                   "74 65 72 73 07 6D 61 78 69 6D 75 6D 4A 64 61 74" \
+                   "65 3D 74 6F 64 61 79 0A 75 6E 69 74 3D 6D 2F 73" \
+                   "5E 32 21 3C D1 E4 02 E3 05 F8 54 4C 56"
 
-hop_limit_result = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/target-value/value", 
-                                        keys= [5, 3, 'fid-ipv6-hoplimit', 1, 'di-bidirectional', 0], value=hop_limit_value) 
-pprint.pprint(hop_limit_result)
+coap_message = binascii.unhexlify(coap_message_txt.replace(' ', ''))
+
+parser = Parser()
+
+parsed = parser.parse(coap_message, T_DIR_DW, start="CoAP")
+print (parsed)
+
+if parsed[0] != None:
+        rule = rm.FindRuleFromPacket(pkt=parsed[0], 
+                                     direction=T_DIR_DW, 
+                                     failed_field=True)    
+        print (rule)
+
+        if rule:
+            compress = Compressor()
+
+            SCHC_pkt = compress.compress(rule=rule,
+                                         parsed_packet=parsed[0],
+                                         data= parsed[1],
+                                         direction=T_DIR_DW,
+                                         verbose=True)
+            
+            print("SCHC packet in hex")
+            SCHC_pkt.display()
 
 
-hop_limit_value = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/target-value/value", 
-                                        keys= [5, 3, 'fid-ipv6-hoplimit', 1, 'di-bidirectional', 0]) 
-pprint.pprint (hop_limit_value)
-rm.Print()
 
-print("generate an error since rule is not conform to YANG DM")
-#set to not-send without TV
 
-try:
-    wrong_result = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/comp-decomp-action", 
-                                        keys= [5, 3, 'fid-coap-type', 1, 'di-bidirectional'], value='cda-not-sent',
-                                        validate = dm) 
-except Exception as e:
-    print ("Yangson do not accept this")
-    print (e)
-
-print ("make it conform")
-intermediary_result = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/comp-decomp-action", 
-                                        keys= [5, 3, 'fid-coap-type', 1, 'di-bidirectional'], value='cda-not-sent')
-
-print ("CDA set")
-intermediary_result = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule/entry/target-value", 
-                                        keys= [5, 3, 'fid-coap-type', 1, 'di-bidirectional'], 
-                                        value=[{1: 0, 2: b'\x03'}],
-                                        validate=dm)
-
-rm.Print()
-
-print ("CHANGE AN EXISTING RULE")
-
-intermediary_result = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule", 
-                                        keys=[6, 3],
-                                        value={33: 3, 34: 6, 35: 5090})
-rm.Print()
-
-print ("ADD A RULE")
-
-intermediary_result = rm.manipulate_coreconf(device="test:device1", sid="/ietf-schc:schc/rule", 
-                                        keys=[10, 8],
-                                        value={33: 8, 34: 10, 35: 5090}, validate=dm) # 33: and 34: useless since in key
-rm.Print()
+#   def FindRuleFromPacket(self, pkt, direction=T_DIR_BI, failed_field=False):
