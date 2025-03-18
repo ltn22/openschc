@@ -54,7 +54,7 @@
 5053;data;/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action
 5054;data;/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action-value
 5055;data;/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action-value/index
-5056;data; /ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action-value/value
+5056;data;/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action-value/value
 5057;data;/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/direction-indicator
 5058;data;/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/field-length
 5059;data;/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/field-position

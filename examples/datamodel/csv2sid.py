@@ -42,7 +42,7 @@ for i in range(len(sid_module["items"])):
     result = take_from_allocation(item["sid"], item["namespace"], item["identifier"])
     if result != None:
         print (f"{item['identifier']:30}:{item['sid']:6} ==> {result[0]:6}")
-        item["sid"] == result[0]
+        item["sid"] = int(result[0].replace('\ufeff', ''))
         new_items.append(item)
     else:
         unknown_items.append(item)

@@ -1022,6 +1022,10 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
 
     def sid_search_for(self, name, space="data"):
 
+        print ("serch for", name)
+
+
+
         for s in self._sid_info:
             for e in s["items"]:
                 if e["identifier"] == name and e["namespace"]==space:
@@ -1444,7 +1448,7 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
 
                             # "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/space-id"
                             entry_cbor = \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/space-id", space="data") - entry_sid) + \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry-option-space/space-id", space="data") - entry_sid) + \
                                 cbor.dumps(self.sid_search_for(name="space-id-coap", space="identity")) 
                             nb_elm += 1
 
@@ -1453,7 +1457,7 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                             #  "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/option-value",
                             option_number = int(e[T_FID].replace("COAP_OPTION:", ""))
                             entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/option-value", space="data") - entry_sid) + \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry-option-space/option-value", space="data") - entry_sid) + \
                                 cbor.dumps(option_number) 
                             nb_elm += 1
 
@@ -1463,11 +1467,11 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                             l=e[T_FL]
                             if type(l) == int:
                                 entry_cbor += \
-                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/field-length", space="data") - entry_sid) + \
+                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry-option-space/field-length", space="data") - entry_sid) + \
                                     cbor.dumps(l)
                             elif type(l) == str:
                                 entry_cbor += \
-                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/field-length", space="data") - entry_sid) + \
+                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry-option-space/field-length", space="data") - entry_sid) + \
                                     struct.pack("!BB", 0xD8, 45) + \
                                     cbor.dumps(self.sid_search_for(name=YANG_ID[l][1], space="identity"))
                             else:
@@ -1478,7 +1482,7 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                             
                             # "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/field-position"
                             entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/field-position", space="data") - entry_sid) + \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry-option-space/field-position", space="data") - entry_sid) + \
                                 struct.pack('!B', e[T_FP])
                             nb_elm += 1                           #
                             print ("@", nb_elm, binascii.hexlify(entry_cbor))
@@ -1486,7 +1490,7 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                             #"/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/direction-indicator"
 
                             entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/direction-indicator", space="data") - entry_sid) + \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry-option-space/direction-indicator", space="data") - entry_sid) + \
                                 cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_DI]][1], space="identity")) 
                             nb_elm += 1
 
@@ -1495,7 +1499,7 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                             # "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/matching-operator",
 
                             entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/matching-operator", space="data") - entry_sid) + \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry-option-space/matching-operator", space="data") - entry_sid) + \
                                 cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_MO]][1], space="identity")) 
                             nb_elm += 1
 
@@ -1503,9 +1507,9 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
 
                             #/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/matching-operator-value
                             if T_MO_VAL in e:
-                                mo_val_cbor = dictify_cbor(e[T_MO_VAL], "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/matching-operator-value")
+                                mo_val_cbor = dictify_cbor(e[T_MO_VAL], "/ietf-schc:schc/rule/entry-option-space/matching-operator-value")
                                 entry_cbor += \
-                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/matching-operator-value", space="data") - entry_sid) + \
+                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry-option-space/matching-operator-value", space="data") - entry_sid) + \
                                     mo_val_cbor
                                 nb_elm += 1
 
@@ -1513,7 +1517,7 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
 
                             #"/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action"
                             entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action", space="data") - entry_sid) + \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry-option-space/comp-decomp-action", space="data") - entry_sid) + \
                                 cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_CDA]][1], space="identity")) 
                             nb_elm += 1         
                             print ("@", nb_elm, binascii.hexlify(entry_cbor))
@@ -1521,10 +1525,10 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                             # "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/target-value"
 
                             if T_TV in e and e[T_TV] != None:
-                                tv_cbor = dictify_cbor(e[T_TV], "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/target-value")
+                                tv_cbor = dictify_cbor(e[T_TV], "/ietf-schc:schc/rule/entry-option-space/target-value")
 
                                 entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/target-value", space="data") - entry_sid) + \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry-option-space/target-value", space="data") - entry_sid) + \
                                 tv_cbor
                                 nb_elm += 1
 

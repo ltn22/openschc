@@ -24,7 +24,7 @@ rm.Print()
 
 
 
-rm.add_sid_file("ietf-schc@2023-01-28.sid")
+rm.add_sid_file("ietf-schc-allo.sid")
 rm.add_sid_file("ietf-schc-oam@2021-11-10.sid")
 rm.add_sid_file("ietf-schc-scp82@2025-03-11.sid")
 
@@ -110,8 +110,11 @@ if parsed[0] != None:
 
             print ("Same compression?", SCHC_pkt._content==SCHC_pkt2._content)
 
-rm2.add_sid_file("ietf-schc@2023-01-28.sid")
-rm2.add_sid_file("ietf-schc-opt@2024-12-19.sid")
+#rm2.add_sid_file("ietf-schc@2023-01-28.sid")
+#rm2.add_sid_file("ietf-schc-opt@2024-12-19.sid")
+
+rm2.add_sid_file("ietf-schc-ali.sid")
+rm2.add_sid_file("ietf-schc-opt-ali.sid")
 
 ycbor2 = rm2.to_coreconf()
 print(binascii.hexlify(ycbor2))

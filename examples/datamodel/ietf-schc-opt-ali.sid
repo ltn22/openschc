@@ -1,0 +1,132 @@
+{
+    "assignment-ranges": [
+        {
+            "entry-point": 7000,
+            "size": 300
+        }
+    ],
+    "module-name": "ietf-schc-opt",
+    "module-revision": "2024-12-19",
+    "items": [
+        {
+            "namespace": "module",
+            "identifier": "ietf-schc-opt",
+            "status": "unstable",
+            "sid": 7000
+        },
+        {
+            "namespace": "identity",
+            "identifier": "space-id-base-type",
+            "status": "unstable",
+            "sid": 7001
+        },
+        {
+            "namespace": "identity",
+            "identifier": "space-id-coap",
+            "status": "unstable",
+            "sid": 7002
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space",
+            "status": "unstable",
+            "sid": 7003
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action",
+            "status": "unstable",
+            "sid": 7004
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action-value",
+            "status": "unstable",
+            "sid": 7005
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action-value/index",
+            "status": "unstable",
+            "sid": 7006
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/comp-decomp-action-value/value",
+            "status": "unstable",
+            "sid": 7007
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/direction-indicator",
+            "status": "unstable",
+            "sid": 7008
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/field-length",
+            "status": "unstable",
+            "sid": 7009
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/field-position",
+            "status": "unstable",
+            "sid": 7010
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/matching-operator",
+            "status": "unstable",
+            "sid": 7011
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/matching-operator-value",
+            "status": "unstable",
+            "sid": 7012
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/matching-operator-value/index",
+            "status": "unstable",
+            "sid": 7013
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/matching-operator-value/value",
+            "status": "unstable",
+            "sid": 7014
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/option-value",
+            "status": "unstable",
+            "sid": 7015
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/space-id",
+            "status": "unstable",
+            "sid": 7016
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/target-value",
+            "status": "unstable",
+            "sid": 7017
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/target-value/index",
+            "status": "unstable",
+            "sid": 7018
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/target-value/value",
+            "status": "unstable",
+            "sid": 7019
+        }
+    ]
+}

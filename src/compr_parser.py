@@ -60,7 +60,7 @@ class Parser:
 
     def parse(self, pkt, direction, layers=["IPv6", "ICMP", "UDP", "CoAP"], 
               coap_port = 5683,
-              start="IPv6", universal_option = False):
+              start="IPv6", universal_option = False, quentin=False):
         """
         Parsing a byte array:
         - pkt is the bytearray to be parsed
@@ -186,6 +186,7 @@ class Parser:
                 self.header_fields[T_COAP_TOKEN, 1] = [adapt_value(token), tkl*8]
 
             option_number = 0
+            option_pos    = 1
             while (pos < len(pkt)):
                 if (int(pkt[pos]) == 0xFF): break
 
@@ -226,6 +227,11 @@ class Parser:
                 if universal_option:
                     option_name=f'COAP_OPTION:{option_number}'
                     self.header_fields[option_name, field_position[option_number]] = [bytes(option_value), L*8,  "variable"]
+                elif quentin:
+                    self.header_fields[T_COAP_DELTAT, option_pos] = [deltaTL, 16]
+                    self.header_fields[T_COAP_LENGTH, option_pos] = [L, 16]
+                    self.header_fields[T_COAP_VALUE,  option_pos]  = [bytes(option_value), L*8]
+                    option_pos += 1
                 else:
                     try: # in RFC 9363 option has to be known
                         self.header_fields[option_names[option_number], field_position[option_number]] = [bytes(option_value), L*8,  "variable"]
