@@ -211,7 +211,7 @@ class Parser:
                 lengthLength = 4
                 if L == 13: 
                     L = int(pkt[pos]) + 13
-                    lengthLength = 16
+                    lengthLength = 8
                     pos += 1
                  # /!\ Larger value not implemented
                
