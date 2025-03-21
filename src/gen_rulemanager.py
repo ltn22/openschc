@@ -328,6 +328,9 @@ FIELD__DEFAULT_PROPERTY = {
     T_COAP_OPT_URI_QUERY   : {"FL": "var", "TYPE": str, "ALGO": "COAP_OPTION" },
     T_COAP_OPT_NO_RESP     : {"FL": "var", "TYPE": int, "ALGO": "COAP_OPTION"},
     T_COAP_OPT_SCP82_PARAM : {"FL": "var", "TYPE": str, "ALGO": "COAP_OPTION"},
+    T_COAP_DELTAT          : {"FL": "var", "TYPE": bytes, "ALGO": "DIRECT"},
+    T_COAP_LENGTH          : {"FL": "var", "TYPE": bytes, "ALGO": "DIRECT"},
+    T_COAP_VALUE           : {"FL": "var", "TYPE": bytes, "ALGO": "DIRECT"}
 }
 
 
@@ -577,7 +580,7 @@ class RuleManager:
                 FID = r[T_FID].upper()
                 # transition in universal option, convert into universal value
                 if self.universal_option and FID in [ T_COAP_OPT_URI_HOST, T_COAP_OPT_URI_PATH, T_COAP_OPT_CONT_FORMAT, 
-                           T_COAP_OPT_ACCEPT,  T_COAP_OPT_URI_QUERY, T_COAP_OPT_NO_RESP]:
+                           T_COAP_OPT_ACCEPT,  T_COAP_OPT_URI_QUERY, T_COAP_OPT_NO_RESP, T_COAP_DELTAT, T_COAP_LENGTH, T_COAP_VALUE]:
                     fid_name= f'COAP_OPTION:{coap_options[FID]}'
                     entry[T_FID] = fid_name
                     entry[T_FL] = self._return_default(r, T_FL, FIELD__DEFAULT_PROPERTY[FID][T_FL])

@@ -233,8 +233,8 @@ class Parser:
                     option_name=f'COAP_OPTION:{option_number}'
                     self.header_fields[option_name, field_position[option_number]] = [bytes(option_value), L*8,  "variable"]
                 elif quentin:
-                    self.header_fields[T_COAP_DELTAT, option_pos] = [deltaTL>>4, deltaLength]
-                    self.header_fields[T_COAP_LENGTH, option_pos] = [L, lengthLength]
+                    self.header_fields[T_COAP_DELTAT, option_pos] = [adapt_value(deltaT), deltaLength]
+                    self.header_fields[T_COAP_LENGTH, option_pos] = [adapt_value(L), lengthLength]
                     self.header_fields[T_COAP_VALUE,  option_pos]  = [bytes(option_value), L*8]
                     option_pos += 1
                 else:

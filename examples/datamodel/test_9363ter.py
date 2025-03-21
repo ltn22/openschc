@@ -32,12 +32,11 @@ coap_message = binascii.unhexlify(coap_message_txt.replace(' ', ''))
 parsed = parser.parse(coap_message, T_DIR_DW, start="CoAP", quentin=True)
 pprint.pprint (parsed[0])
 
-0/0
 
-rm2    = RM.RuleManager(universal_option=True)
-rm2.Add(file="coap+UO.json", device="test:device1")
+
+rm2    = RM.RuleManager()
+rm2.Add(file="coap+synt.json", device="test:device1")
 rm2.Print()
-
 
 
 if parsed[0] != None:
@@ -45,7 +44,6 @@ if parsed[0] != None:
                                      direction=T_DIR_DW, 
                                      failed_field=True)    
         print (rule)
-
         if rule:
             compress = Compressor()
 
@@ -62,6 +60,7 @@ if parsed[0] != None:
 #rm2.add_sid_file("ietf-schc-opt@2024-12-19.sid")
 
 rm2.add_sid_file("ietf-schc-allo.sid")
+rm2.add_sid_file("ietf-schc-quentin@2025-03-21.sid")
 
 ycbor2 = rm2.to_coreconf()
 print(binascii.hexlify(ycbor2))

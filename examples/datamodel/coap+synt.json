@@ -1,0 +1,39 @@
+[ {
+  "RuleIDValue": 9,
+  "RuleIDLength": 8,
+  "Compression": [
+    {"FID": "COAP.VER",                            "DI": "DW", "TV": 1,  "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.TYPE",                                       "TV": 0,  "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.TKL",                            "DI": "DW", "TV": 0,  "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.CODE",                                       "TV": 1,  "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.MID",                                        "TV": 0,  "MO": "MSB", "MO.VAL": 7, "CDA": "LSB"},
+    {"FID": "COAP.DELTAT",  "FL": 4, "FP": 1, "DI": "DW",     "TV":11,  "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.LENGTH",  "FL": 4, "FP": 1, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+    {"FID": "COAP.VALUE", "FL": "var", "FP": 1, "DI": "DW",              "MO": "ignore","CDA": "value-sent"},
+
+    {"FID": "COAP.DELTAT",  "FL": 4, "FP": 2, "DI": "DW",     "TV":0,         "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.LENGTH",  "FL": 4, "FP": 2, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+    {"FID": "COAP.VALUE", "FL": "var", "FP": 2, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+
+    {"FID": "COAP.DELTAT",  "FL": 4, "FP": 3, "DI": "DW",     "TV":4,       "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.LENGTH",  "FL": 4, "FP": 3, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+    {"FID": "COAP.VALUE", "FL": "var", "FP": 3, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+
+    {"FID": "COAP.DELTAT",  "FL": 4, "FP": 4, "DI": "DW",  "TV": 0,          "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.LENGTH",  "FL": 4, "FP": 4, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+    {"FID": "COAP.VALUE", "FL": "var", "FP": 4, "DI": "DW",            "MO": "ignore","CDA": "value-sent"},
+
+    {"FID": "COAP.DELTAT",  "FL": 4, "FP": 5, "DI": "DW",  "TV":2,           "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.LENGTH",  "FL": 4, "FP": 5, "DI": "DW",   "TV":1,         "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.VALUE", "FL": 8, "FP": 5, "DI": "DW",   "TV": 60,         "MO": "equal","CDA": "not-sent"},
+
+    {"FID": "COAP.DELTAT",  "FL": 4, "FP": 6, "DI": "DW",  "TV":241,           "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.LENGTH",  "FL": 4, "FP": 6, "DI": "DW",   "TV":1,         "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.VALUE", "FL": 8, "FP": 6, "DI": "DW",   "TV": 2,         "MO": "equal","CDA": "not-sent"},
+
+    {"FID": "COAP.DELTAT",  "FL": 8, "FP": 7, "DI": "DW",  "TV":1797,           "MO": "equal","CDA": "not-sent"},
+    {"FID": "COAP.LENGTH",  "FL": 4, "FP": 7, "DI": "DW",                    "MO": "ignore","CDA": "value-sent"},
+    {"FID": "COAP.VALUE", "FL": 8, "FP": 7, "DI": "DW",                        "MO": "ignore","CDA": "value-sent"}
+  ]
+}
+]

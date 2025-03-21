@@ -293,7 +293,11 @@ YANG_ID = {
     T_ICMPV6_IDENT: [None, "fid-icmpv6-identifier"],
     T_ICMPV6_SEQNO: [None, "fid-icmpv6-sequence"],
     T_ICMPV6_CKSUM: [None, "fid-icmpv6-checksum"],
-    T_COAP_OPT_SCP82_PARAM : [None, "fid-coap-option-scp82-param"]
+    T_COAP_OPT_SCP82_PARAM : [None, "fid-coap-option-scp82-param"],
+    T_COAP_DELTAT : [None, "fid-coap-delta-type"],
+    T_COAP_LENGTH : [None, "fid-coap-length"],
+    T_COAP_VALUE: [None, "fid-coap-value"]
+
 
 }
 

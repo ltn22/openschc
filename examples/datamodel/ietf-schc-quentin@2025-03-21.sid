@@ -1,0 +1,33 @@
+{
+  "assignment-ranges": [
+    {
+      "entry-point": 8000,
+      "size": 20
+    }
+  ],
+  "module-name": "ietf-schc-quentin",
+  "module-revision": "2025-03-21",
+  "items": [
+    {
+      "namespace": "module",
+      "identifier": "ietf-schc-quentin",
+      "sid": 8000
+    },
+    {
+      "namespace": "identity",
+      "identifier": "fid-coap-delta-types",
+      "sid": 8001
+    },
+    {
+      "namespace": "identity",
+      "identifier": "fid-coap-length",
+      "sid": 8002
+    },
+    {
+      "namespace": "identity",
+      "identifier": "fid-coap-value",
+      "sid": 8003
+    }
+  ],
+  "key-mapping": {}
+}
