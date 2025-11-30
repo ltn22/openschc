@@ -13,7 +13,6 @@ from gen_utils import *
 from binascii import hexlify, unhexlify
 from struct import pack, unpack
 import ipaddress
-from scapy.all import *
 import binascii
 
 
@@ -174,6 +173,12 @@ class Parser:
 
             pos += 4
 
+            if self.header_fields[T_COAP_TKL, 1] == 13:
+                self.header_fields[T_COAP_TKL, 1] += pkt[pos]
+                pos +=1
+
+
+
             token = b''
             tkl   = int.from_bytes(self.header_fields[T_COAP_TKL, 1][0], "big")
             for i in range(0, tkl):
@@ -330,7 +335,7 @@ class Unparser:
                 coap_tlk  = int.from_bytes(header_d[(T_COAP_TKL, 1)][0], byteorder="big" )
                 coap_code = int.from_bytes(header_d[(T_COAP_CODE, 1)][0], byteorder="big" )
                 coap_mid  = int.from_bytes(header_d[(T_COAP_MID, 1)][0], byteorder="big" )
-                
+
                 b1 = (coap_ver << 6)|(coap_type<<4)|(coap_tlk)
                 coap_h = struct.pack("!BBH", b1, coap_code ,coap_mid )
 

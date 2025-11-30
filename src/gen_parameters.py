@@ -27,11 +27,13 @@ T_IPV6_DEV_IID = "IPV6.DEV_IID"
 T_IPV6_APP_PREFIX = "IPV6.APP_PREFIX"
 T_IPV6_APP_IID = "IPV6.APP_IID"
 
+T_IPV4_VER = "IPV4.VER"
+
 T_PROTO_ICMPV6 = "ICMPV6"
 # ICMPv6 header fields
 T_ICMPV6_TYPE = "ICMPV6.TYPE"
 T_ICMPV6_CODE = "ICMPV6.CODE"
-T_ICMPV6_CKSUM = "ICMPV6.CKSUM"
+T_ICMPV6_CKSUM = "ICMPV6.CHECKSUM"
 T_ICMPV6_IDENT = "ICMPV6.IDENT"
 T_ICMPV6_SEQNO = "ICMPV6.SEQNO"
 T_ICMPV6_UNUSED = "ICMPV6.UNUSED"
@@ -46,6 +48,8 @@ T_UDP_DEV_PORT = "UDP.DEV_PORT"
 T_UDP_APP_PORT = "UDP.APP_PORT"
 T_UDP_LEN = "UDP.LEN"
 T_UDP_CKSUM = "UDP.CKSUM"
+
+
 
 T_PROTO_COAP = "COAP"
 # CoAP fields
@@ -151,6 +155,9 @@ T_POSITION_DEVICE = "device"
 T_INDEXES = "Indexes"
 T_CMD_INDIRECT = "INDIRECT"
 
+T_O_DELTA = "COAP.O-DELTA"
+T_O_LENGTH = "COAP.O-LENGTH"
+T_O_VALUE = "COAP.O-VALUE"
 
 SID = 100000
 
@@ -224,6 +231,7 @@ YANG_ID = {
     "TBD" : [SID+66, "fid-ipv6-trafficclass-ds"],
     "TBD" : [SID+67, "fid-ipv6-trafficclass-ecn"],
     T_IPV6_VER : [SID+68, "fid-ipv6-version"],
+    T_IPV4_VER : [SID+200, "fid-ipv6-version"],
     T_UDP_APP_PORT : [SID+69, "fid-udp-app-port"],
      "TBD" : [SID+70, "fid-udp-base-type"],      
     T_UDP_CKSUM : [SID+71, "fid-udp-checksum"],
@@ -287,7 +295,11 @@ YANG_ID = {
     T_ICMPV6_IDENT: [None, "fid-icmpv6-identifier"],
     T_ICMPV6_SEQNO: [None, "fid-icmpv6-sequence"],
     T_ICMPV6_CKSUM: [None, "fid-icmpv6-checksum"],
-
+    T_ICMPV6_PAYLOAD: [None, "fid-icmpv6-payload"],
+    # for quentin extension
+    T_O_DELTA :[SID+300, "fid-coap-delta-types"],
+    T_O_LENGTH : [SID+301, "fid-coap-length"],
+    T_O_VALUE : [SID+302, "fid-coap-value"]
 }
 
 import ipaddress

@@ -1,0 +1,396 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix lwm2m: <urn:oma:lwm2m:> .
+@prefix lwm2m-comp: <urn:oma:lwm2m:composite:device:> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+# Module definition
+lwm2m-comp: a rdfs:Resource ;
+    rdfs:label "LwM2M Composite Device"@en, "Dispositif Composite LwM2M"@fr ;
+    rdfs:comment "YANG data module representing a composite LwM2M device with two temperature sensors, one accelerometer, and one presence detector."@en,
+               "Module YANG représentant un dispositif LwM2M composite avec deux capteurs de température, un accéléromètre et un détecteur de présence."@fr ;
+    rdfs:isDefinedBy <https://www.omaspecworks.org/> ;
+    lwm2m:revision "2025-03-28" ;
+    lwm2m:reference "LwM2M Object Registry" ;
+    lwm2m:sid "1000000" .
+
+# Quality Level Enum
+lwm2m-comp:QualityLevel a rdfs:Class ;
+    rdfs:label "Measurement quality level"@en, "Niveau de qualité de mesure"@fr ;
+    rdfs:comment "Measurement quality level. Maps to LwM2M Resource ID: 6049"@en,
+               "Niveau de qualité de mesure. Correspond à l'ID de ressource LwM2M: 6049"@fr .
+
+lwm2m-comp:QualityLevelBad a lwm2m-comp:QualityLevel ;
+    rdfs:label "Bad quality"@en, "Mauvaise qualité"@fr ;
+    lwm2m:enumValue "0" .
+
+lwm2m-comp:QualityLevelPoor a lwm2m-comp:QualityLevel ;
+    rdfs:label "Poor quality"@en, "Qualité médiocre"@fr ;
+    lwm2m:enumValue "1" .
+
+lwm2m-comp:QualityLevelGood a lwm2m-comp:QualityLevel ;
+    rdfs:label "Good quality"@en, "Bonne qualité"@fr ;
+    lwm2m:enumValue "2" .
+
+lwm2m-comp:QualityLevelExcellent a lwm2m-comp:QualityLevel ;
+    rdfs:label "Excellent quality"@en, "Excellente qualité"@fr ;
+    lwm2m:enumValue "3" .
+
+# Sensor State Enum
+lwm2m-comp:SensorState a rdfs:Class ;
+    rdfs:label "Sensor state"@en, "État du capteur"@fr ;
+    rdfs:comment "Indicates whether the sensor is enabled or disabled. Maps to LwM2M Resource ID: 5850"@en,
+               "Indique si le capteur est activé ou désactivé. Correspond à l'ID de ressource LwM2M: 5850"@fr .
+
+lwm2m-comp:SensorStateDisabled a lwm2m-comp:SensorState ;
+    rdfs:label "Sensor disabled"@en, "Capteur désactivé"@fr ;
+    lwm2m:enumValue "0" .
+
+lwm2m-comp:SensorStateEnabled a lwm2m-comp:SensorState ;
+    rdfs:label "Sensor enabled"@en, "Capteur activé"@fr ;
+    lwm2m:enumValue "1" .
+
+# Battery Status Enum
+lwm2m-comp:BatteryStatus a rdfs:Class ;
+    rdfs:label "Battery status"@en, "État de la batterie"@fr ;
+    rdfs:comment "Battery status. Maps to LwM2M Resource ID: 20"@en,
+               "État de la batterie. Correspond à l'ID de ressource LwM2M: 20"@fr .
+
+lwm2m-comp:BatteryStatusNormal a lwm2m-comp:BatteryStatus ;
+    rdfs:label "Normal"@en, "Normal"@fr ;
+    lwm2m:enumValue "0" .
+
+lwm2m-comp:BatteryStatusCharging a lwm2m-comp:BatteryStatus ;
+    rdfs:label "Charging"@en, "En charge"@fr ;
+    lwm2m:enumValue "1" .
+
+lwm2m-comp:BatteryStatusChargeComplete a lwm2m-comp:BatteryStatus ;
+    rdfs:label "Charge Complete"@en, "Charge complète"@fr ;
+    lwm2m:enumValue "2" .
+
+lwm2m-comp:BatteryStatusDamaged a lwm2m-comp:BatteryStatus ;
+    rdfs:label "Damaged"@en, "Endommagée"@fr ;
+    lwm2m:enumValue "3" .
+
+lwm2m-comp:BatteryStatusLow a lwm2m-comp:BatteryStatus ;
+    rdfs:label "Low Battery"@en, "Batterie faible"@fr ;
+    lwm2m:enumValue "4" .
+
+lwm2m-comp:BatteryStatusNotInstalled a lwm2m-comp:BatteryStatus ;
+    rdfs:label "Not Installed"@en, "Non installée"@fr ;
+    lwm2m:enumValue "5" .
+
+lwm2m-comp:BatteryStatusUnknown a lwm2m-comp:BatteryStatus ;
+    rdfs:label "Unknown"@en, "Inconnu"@fr ;
+    lwm2m:enumValue "6" .
+
+# Device class
+lwm2m-comp:Device a rdfs:Class ;
+    rdfs:label "Composite device"@en, "Dispositif composite"@fr ;
+    rdfs:comment "Composite device containing multiple sensors"@en,
+               "Dispositif composite contenant plusieurs capteurs"@fr ;
+    lwm2m:sid "1000001" .
+
+# Temperature Sensor class
+lwm2m-comp:TemperatureSensor a rdfs:Class ;
+    rdfs:label "Temperature sensor"@en, "Capteur de température"@fr ;
+    rdfs:comment "Temperature sensor (LwM2M Object ID: 3303)"@en,
+               "Capteur de température (ID d'objet LwM2M: 3303)"@fr ;
+    lwm2m:objectID "3303" ;
+    lwm2m:sid "1000033" .
+
+lwm2m-comp:id a rdf:Property ;
+    rdfs:label "Identifier"@en, "Identifiant"@fr ;
+    rdfs:comment "Instance identifier"@en,
+               "Identifiant d'instance"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range xsd:unsignedShort ;
+    lwm2m:sid "1000034" .
+
+lwm2m-comp:name a rdf:Property ;
+    rdfs:label "Name"@en, "Nom"@fr ;
+    rdfs:comment "Human-readable name for this sensor"@en,
+               "Nom lisible par l'humain pour ce capteur"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range xsd:string ;
+    lwm2m:sid "1000040" .
+
+lwm2m-comp:sensorValue a rdf:Property ;
+    rdfs:label "Sensor value"@en, "Valeur du capteur"@fr ;
+    rdfs:comment "Last or current measured value from the sensor. Maps to LwM2M Resource ID: 5700"@en,
+               "Dernière ou actuelle valeur mesurée par le capteur. Correspond à l'ID de ressource LwM2M: 5700"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range xsd:decimal ;
+    lwm2m:resourceID "5700" ;
+    lwm2m:sid "1000044" .
+
+lwm2m-comp:sensorUnits a rdf:Property ;
+    rdfs:label "Sensor units"@en, "Unités du capteur"@fr ;
+    rdfs:comment "Measurement unit of temperature, such as 'Cel' for Celsius. Maps to LwM2M Resource ID: 5701"@en,
+               "Unité de mesure de la température, comme 'Cel' pour Celsius. Correspond à l'ID de ressource LwM2M: 5701"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range xsd:string ;
+    lwm2m:resourceID "5701" ;
+    lwm2m:sid "1000043" .
+
+lwm2m-comp:minMeasuredValue a rdf:Property ;
+    rdfs:label "Minimum measured value"@en, "Valeur minimale mesurée"@fr ;
+    rdfs:comment "Minimum value measured by the sensor since power on or reset. Maps to LwM2M Resource ID: 5601"@en,
+               "Valeur minimale mesurée par le capteur depuis la mise sous tension ou la réinitialisation. Correspond à l'ID de ressource LwM2M: 5601"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range xsd:decimal ;
+    lwm2m:resourceID "5601" ;
+    lwm2m:sid "1000038" .
+
+lwm2m-comp:maxMeasuredValue a rdf:Property ;
+    rdfs:label "Maximum measured value"@en, "Valeur maximale mesurée"@fr ;
+    rdfs:comment "Maximum value measured by the sensor since power on or reset. Maps to LwM2M Resource ID: 5602"@en,
+               "Valeur maximale mesurée par le capteur depuis la mise sous tension ou la réinitialisation. Correspond à l'ID de ressource LwM2M: 5602"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range xsd:decimal ;
+    lwm2m:resourceID "5602" ;
+    lwm2m:sid "1000035" .
+
+lwm2m-comp:minRangeValue a rdf:Property ;
+    rdfs:label "Minimum range value"@en, "Valeur minimale de la plage"@fr ;
+    rdfs:comment "Minimum value that can be measured by the sensor. Maps to LwM2M Resource ID: 5603"@en,
+               "Valeur minimale qui peut être mesurée par le capteur. Correspond à l'ID de ressource LwM2M: 5603"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range xsd:decimal ;
+    lwm2m:resourceID "5603" ;
+    lwm2m:sid "1000039" .
+
+lwm2m-comp:maxRangeValue a rdf:Property ;
+    rdfs:label "Maximum range value"@en, "Valeur maximale de la plage"@fr ;
+    rdfs:comment "Maximum value that can be measured by the sensor. Maps to LwM2M Resource ID: 5604"@en,
+               "Valeur maximale qui peut être mesurée par le capteur. Correspond à l'ID de ressource LwM2M: 5604"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range xsd:decimal ;
+    lwm2m:resourceID "5604" ;
+    lwm2m:sid "1000036" .
+
+lwm2m-comp:resetMinMaxMeasuredValues a rdf:Property ;
+    rdfs:label "Reset min/max measured values"@en, "Réinitialiser les valeurs min/max mesurées"@fr ;
+    rdfs:comment "Reset the Min/Max measured values to current value. Maps to LwM2M Resource ID: 5605"@en,
+               "Réinitialise les valeurs min/max mesurées à la valeur actuelle. Correspond à l'ID de ressource LwM2M: 5605"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    lwm2m:resourceID "5605" ;
+    lwm2m:sid "1000041" .
+
+lwm2m-comp:sensorState a rdf:Property ;
+    rdfs:label "Sensor state"@en, "État du capteur"@fr ;
+    rdfs:comment "Indicates whether the sensor is enabled (true) or disabled (false). Maps to LwM2M Resource ID: 5850"@en,
+               "Indique si le capteur est activé (vrai) ou désactivé (faux). Correspond à l'ID de ressource LwM2M: 5850"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range lwm2m-comp:SensorState ;
+    lwm2m:resourceID "5850" ;
+    lwm2m:sid "1000042" .
+
+lwm2m-comp:timestamp a rdf:Property ;
+    rdfs:label "Timestamp"@en, "Horodatage"@fr ;
+    rdfs:comment "The timestamp of when the measurement was performed. Maps to LwM2M Resource ID: 5518"@en,
+               "L'horodatage de quand la mesure a été effectuée. Correspond à l'ID de ressource LwM2M: 5518"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range xsd:long ;
+    lwm2m:resourceID "5518" ;
+    lwm2m:sid "1000045" .
+
+lwm2m-comp:measurementQualityLevel a rdf:Property ;
+    rdfs:label "Measurement quality level"@en, "Niveau de qualité de mesure"@fr ;
+    rdfs:comment "Measurement quality level. Maps to LwM2M Resource ID: 6049"@en,
+               "Niveau de qualité de mesure. Correspond à l'ID de ressource LwM2M: 6049"@fr ;
+    rdfs:domain lwm2m-comp:TemperatureSensor ;
+    rdfs:range lwm2m-comp:QualityLevel ;
+    lwm2m:resourceID "6049" ;
+    lwm2m:sid "1000037" .
+
+# Accelerometer class
+lwm2m-comp:Accelerometer a rdfs:Class ;
+    rdfs:label "Accelerometer"@en, "Accéléromètre"@fr ;
+    rdfs:comment "Accelerometer (LwM2M Object ID: 3313)"@en,
+               "Accéléromètre (ID d'objet LwM2M: 3313)"@fr ;
+    lwm2m:objectID "3313" ;
+    lwm2m:sid "1000002" .
+
+lwm2m-comp:xValue a rdf:Property ;
+    rdfs:label "X Value"@en, "Valeur en X"@fr ;
+    rdfs:comment "X-axis acceleration"@en,
+               "Accélération sur l'axe X"@fr ;
+    rdfs:domain lwm2m-comp:Accelerometer ;
+    rdfs:range xsd:decimal ;
+    lwm2m:resourceID "5702" ;
+    lwm2m:sid "1000008" .
+
+lwm2m-comp:yValue a rdf:Property ;
+    rdfs:label "Y Value"@en, "Valeur en Y"@fr ;
+    rdfs:comment "Y-axis acceleration"@en,
+               "Accélération sur l'axe Y"@fr ;
+    rdfs:domain lwm2m-comp:Accelerometer ;
+    rdfs:range xsd:decimal ;
+    lwm2m:resourceID "5703" ;
+    lwm2m:sid "1000011" .
+
+lwm2m-comp:zValue a rdf:Property ;
+    rdfs:label "Z Value"@en, "Valeur en Z"@fr ;
+    rdfs:comment "Z-axis acceleration"@en,
+               "Accélération sur l'axe Z"@fr ;
+    rdfs:domain lwm2m-comp:Accelerometer ;
+    rdfs:range xsd:decimal ;
+    lwm2m:resourceID "5704" ;
+    lwm2m:sid "1000014" .
+
+# Presence Sensor class
+lwm2m-comp:PresenceSensor a rdfs:Class ;
+    rdfs:label "Presence sensor"@en, "Détecteur de présence"@fr ;
+    rdfs:comment "Presence detector (LwM2M Object ID: 3302)"@en,
+               "Détecteur de présence (ID d'objet LwM2M: 3302)"@fr ;
+    lwm2m:objectID "3302" ;
+    lwm2m:sid "1000024" .
+
+lwm2m-comp:digitalInputState a rdf:Property ;
+    rdfs:label "Digital input state"@en, "État d'entrée numérique"@fr ;
+    rdfs:comment "Current state of the presence sensor, true=presence detected, false=not detected. Maps to LwM2M Resource ID: 5500"@en,
+               "État actuel du capteur de présence, vrai=présence détectée, faux=non détectée. Correspond à l'ID de ressource LwM2M: 5500"@fr ;
+    rdfs:domain lwm2m-comp:PresenceSensor ;
+    rdfs:range xsd:boolean ;
+    lwm2m:resourceID "5500" .
+
+lwm2m-comp:digitalInputCounter a rdf:Property ;
+    rdfs:label "Digital input counter"@en, "Compteur d'entrée numérique"@fr ;
+    rdfs:comment "Cumulative count of presence detections. Maps to LwM2M Resource ID: 5501"@en,
+               "Comptage cumulatif des détections de présence. Correspond à l'ID de ressource LwM2M: 5501"@fr ;
+    rdfs:domain lwm2m-comp:PresenceSensor ;
+    rdfs:range xsd:unsignedLong ;
+    lwm2m:resourceID "5501" .
+
+lwm2m-comp:sensorType a rdf:Property ;
+    rdfs:label "Sensor type"@en, "Type de capteur"@fr ;
+    rdfs:comment "Type of the sensor (e.g., PIR, ultrasonic, microwave). Maps to LwM2M Resource ID: 5751"@en,
+               "Type du capteur (par exemple, PIR, ultrasonique, micro-ondes). Correspond à l'ID de ressource LwM2M: 5751"@fr ;
+    rdfs:domain lwm2m-comp:PresenceSensor ;
+    rdfs:range xsd:string ;
+    lwm2m:resourceID "5751" .
+
+lwm2m-comp:applicationType a rdf:Property ;
+    rdfs:label "Application type"@en, "Type d'application"@fr ;
+    rdfs:comment "Application type of the sensor (e.g., room, corridor, perimeter). Maps to LwM2M Resource ID: 5750"@en,
+               "Type d'application du capteur (par exemple, salle, couloir, périmètre). Correspond à l'ID de ressource LwM2M: 5750"@fr ;
+    rdfs:domain lwm2m-comp:PresenceSensor ;
+    rdfs:range xsd:string ;
+    lwm2m:resourceID "5750" .
+
+# Device Info class
+lwm2m-comp:DeviceInfo a rdfs:Class ;
+    rdfs:label "Device information"@en, "Informations sur le dispositif"@fr ;
+    rdfs:comment "Common device information"@en,
+               "Informations communes sur le dispositif"@fr ;
+    lwm2m:sid "1000017" .
+
+lwm2m-comp:manufacturer a rdf:Property ;
+    rdfs:label "Manufacturer"@en, "Fabricant"@fr ;
+    rdfs:comment "Device manufacturer"@en,
+               "Fabricant du dispositif"@fr ;
+    rdfs:domain lwm2m-comp:DeviceInfo ;
+    rdfs:range xsd:string .
+
+lwm2m-comp:modelNumber a rdf:Property ;
+    rdfs:label "Model number"@en, "Numéro de modèle"@fr ;
+    rdfs:comment "Model identifier"@en,
+               "Identifiant du modèle"@fr ;
+    rdfs:domain lwm2m-comp:DeviceInfo ;
+    rdfs:range xsd:string .
+
+lwm2m-comp:serialNumber a rdf:Property ;
+    rdfs:label "Serial number"@en, "Numéro de série"@fr ;
+    rdfs:comment "Device serial number"@en,
+               "Numéro de série du dispositif"@fr ;
+    rdfs:domain lwm2m-comp:DeviceInfo ;
+    rdfs:range xsd:string .
+
+lwm2m-comp:firmwareVersion a rdf:Property ;
+    rdfs:label "Firmware version"@en, "Version du firmware"@fr ;
+    rdfs:comment "Current firmware version"@en,
+               "Version actuelle du firmware"@fr ;
+    rdfs:domain lwm2m-comp:DeviceInfo ;
+    rdfs:range xsd:string .
+
+lwm2m-comp:batteryLevel a rdf:Property ;
+    rdfs:label "Battery level"@en, "Niveau de batterie"@fr ;
+    rdfs:comment "Current battery level as a percentage. Maps to LwM2M Resource ID: 3"@en,
+               "Niveau actuel de la batterie en pourcentage. Correspond à l'ID de ressource LwM2M: 3"@fr ;
+    rdfs:domain lwm2m-comp:DeviceInfo ;
+    rdfs:range xsd:unsignedByte ;
+    lwm2m:resourceID "3" .
+
+lwm2m-comp:batteryStatus a rdf:Property ;
+    rdfs:label "Battery status"@en, "État de la batterie"@fr ;
+    rdfs:comment "Battery status. Maps to LwM2M Resource ID: 20"@en,
+               "État de la batterie. Correspond à l'ID de ressource LwM2M: 20"@fr ;
+    rdfs:domain lwm2m-comp:DeviceInfo ;
+    rdfs:range lwm2m-comp:BatteryStatus ;
+    lwm2m:resourceID "20" .
+
+# Device instance example
+lwm2m-comp:device1 a lwm2m-comp:Device ;
+    rdfs:label "Example composite device"@en, "Dispositif composite exemple"@fr ;
+    lwm2m-comp:temperatureSensors (
+        [
+            a lwm2m-comp:TemperatureSensor ;
+            lwm2m-comp:id "0"^^xsd:unsignedShort ;
+            lwm2m-comp:name "Indoor temperature sensor"@en, "Capteur de température intérieur"@fr ;
+            lwm2m-comp:sensorValue "22.5"^^xsd:decimal ;
+            lwm2m-comp:sensorUnits "Cel" ;
+            lwm2m-comp:minMeasuredValue "18.2"^^xsd:decimal ;
+            lwm2m-comp:maxMeasuredValue "25.7"^^xsd:decimal ;
+            lwm2m-comp:minRangeValue "-40.0"^^xsd:decimal ;
+            lwm2m-comp:maxRangeValue "85.0"^^xsd:decimal ;
+            lwm2m-comp:sensorState lwm2m-comp:SensorStateEnabled ;
+            lwm2m-comp:timestamp "1713504000"^^xsd:long ;
+            lwm2m-comp:measurementQualityLevel lwm2m-comp:QualityLevelGood
+        ]
+        [
+            a lwm2m-comp:TemperatureSensor ;
+            lwm2m-comp:id "1"^^xsd:unsignedShort ;
+            lwm2m-comp:name "Outdoor temperature sensor"@en, "Capteur de température extérieur"@fr ;
+            lwm2m-comp:sensorValue "15.3"^^xsd:decimal ;
+            lwm2m-comp:sensorUnits "Cel" ;
+            lwm2m-comp:minMeasuredValue "10.1"^^xsd:decimal ;
+            lwm2m-comp:maxMeasuredValue "18.9"^^xsd:decimal ;
+            lwm2m-comp:minRangeValue "-50.0"^^xsd:decimal ;
+            lwm2m-comp:maxRangeValue "100.0"^^xsd:decimal ;
+            lwm2m-comp:sensorState lwm2m-comp:SensorStateEnabled ;
+            lwm2m-comp:timestamp "1713504000"^^xsd:long ;
+            lwm2m-comp:measurementQualityLevel lwm2m-comp:QualityLevelGood
+        ]
+    ) ;
+    lwm2m-comp:accelerometer [
+        a lwm2m-comp:Accelerometer ;
+        lwm2m-comp:id "0"^^xsd:unsignedShort ;
+        lwm2m-comp:xValue "0.05"^^xsd:decimal ;
+        lwm2m-comp:yValue "-0.02"^^xsd:decimal ;
+        lwm2m-comp:zValue "9.81"^^xsd:decimal ;
+        lwm2m-comp:minRangeValue "-16.0"^^xsd:decimal ;
+        lwm2m-comp:maxRangeValue "16.0"^^xsd:decimal ;
+        lwm2m-comp:sensorState lwm2m-comp:SensorStateEnabled ;
+        lwm2m-comp:timestamp "1713504000"^^xsd:long
+    ] ;
+    lwm2m-comp:presenceSensor [
+        a lwm2m-comp:PresenceSensor ;
+        lwm2m-comp:id "0"^^xsd:unsignedShort ;
+        lwm2m-comp:digitalInputState "true"^^xsd:boolean ;
+        lwm2m-comp:digitalInputCounter "42"^^xsd:unsignedLong ;
+        lwm2m-comp:sensorType "PIR" ;
+        lwm2m-comp:applicationType "room" ;
+        lwm2m-comp:sensorState lwm2m-comp:SensorStateEnabled ;
+        lwm2m-comp:timestamp "1713504000"^^xsd:long
+    ] ;
+    lwm2m-comp:deviceInfo [
+        a lwm2m-comp:DeviceInfo ;
+        lwm2m-comp:manufacturer "OMA SpecWorks" ;
+        lwm2m-comp:modelNumber "CDP-2025" ;
+        lwm2m-comp:serialNumber "SN-202504-001" ;
+        lwm2m-comp:firmwareVersion "1.0.0" ;
+        lwm2m-comp:batteryLevel "78"^^xsd:unsignedByte ;
+        lwm2m-comp:batteryStatus lwm2m-comp:BatteryStatusNormal
+    ] .

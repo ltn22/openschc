@@ -1,0 +1,34 @@
+[{
+    "RuleIDValue": 5,
+    "RuleIDLength": 3,
+    "Compression": [
+      {"FID": "COAP.VER", "TV": 1,    "MO": "equal","CDA": "not-sent"},
+      {"FID": "COAP.TYPE",                "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.TKL",                 "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.CODE",                "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.MID",                 "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.TOKEN",                 "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.Uri-Path", "FL": "var", "FP": 1, "DI": "UP", "TV": "foo","MO": "equal","CDA": "not-sent"},
+      {"FID": "COAP.Uri-Path", "FL": "var", "FP": 2, "DI": "UP", "TV": ["bar", "toto"] ,"MO": "match-mapping","CDA": "mapping-sent"},
+      {"FID": "COAP.Uri-Path", "FL": "var", "FP": 3, "DI": "UP",             "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.Uri-Path", "FL": "var", "FP": 4, "DI": "UP",             "MO": "ignore","CDA": "value-sent"},
+      {"FID": "COAP.Uri-Query", "FL": "var", "FP": 1, "DI": "UP", "TV":"k=", "MO": "MSB", "MO.VAL": 16, "CDA": "LSB"},
+      {"FID": "COAP.Content-Format",                  "DI": "DW", "TV": 30, "MO": "equal", "CDA": "not-sent"}
+    ]
+},{
+    "RuleID": 3,
+    "RuleIDLength": 3,
+    "Fragmentation": {
+        "FRMode": "NoAck",
+        "FRDirection" : "DW",
+        "FRModeProfile": {
+            "dtagSize": 2,
+            "FCNSize": 3,
+            "MICAlgorithm": "RCS_RFC8724",
+            "MICWordSize": 8,
+            "L2WordSize": 8
+        }
+    }
+  }    
+
+]

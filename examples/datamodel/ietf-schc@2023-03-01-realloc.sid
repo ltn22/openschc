@@ -1,0 +1,693 @@
+{
+    "assignment-ranges": [
+        {
+            "entry-point": 2550,
+            "size": 400
+        }
+    ],
+    "module-name": "ietf-schc",
+    "module-revision": "2023-03-01",
+    "items": [
+        {
+            "namespace": "module",
+            "identifier": "ietf-schc",
+            "sid": 2550
+        },
+        {
+            "namespace": "identity",
+            "identifier": "ack-behavior-after-all-0",
+            "sid": 2881
+        },
+        {
+            "namespace": "identity",
+            "identifier": "ack-behavior-after-all-1",
+            "sid": 2882
+        },
+        {
+            "namespace": "identity",
+            "identifier": "ack-behavior-base-type",
+            "sid": 2883
+        },
+        {
+            "namespace": "identity",
+            "identifier": "ack-behavior-by-layer2",
+            "sid": 2884
+        },
+        {
+            "namespace": "identity",
+            "identifier": "all-1-data-base-type",
+            "sid": 2885
+        },
+        {
+            "namespace": "identity",
+            "identifier": "all-1-data-no",
+            "sid": 2886
+        },
+        {
+            "namespace": "identity",
+            "identifier": "all-1-data-sender-choice",
+            "sid": 2887
+        },
+        {
+            "namespace": "identity",
+            "identifier": "all-1-data-yes",
+            "sid": 2888
+        },
+        {
+            "namespace": "identity",
+            "identifier": "cda-appiid",
+            "sid": 2889
+        },
+        {
+            "namespace": "identity",
+            "identifier": "cda-base-type",
+            "sid": 2890
+        },
+        {
+            "namespace": "identity",
+            "identifier": "cda-compute",
+            "sid": 2891
+        },
+        {
+            "namespace": "identity",
+            "identifier": "cda-deviid",
+            "sid": 2892
+        },
+        {
+            "namespace": "identity",
+            "identifier": "cda-lsb",
+            "sid": 2893
+        },
+        {
+            "namespace": "identity",
+            "identifier": "cda-mapping-sent",
+            "sid": 2894
+        },
+        {
+            "namespace": "identity",
+            "identifier": "cda-not-sent",
+            "sid": 2895
+        },
+        {
+            "namespace": "identity",
+            "identifier": "cda-value-sent",
+            "sid": 2896
+        },
+        {
+            "namespace": "identity",
+            "identifier": "di-base-type",
+            "sid": 2897
+        },
+        {
+            "namespace": "identity",
+            "identifier": "di-bidirectional",
+            "sid": 2898
+        },
+        {
+            "namespace": "identity",
+            "identifier": "di-down",
+            "sid": 2899
+        },
+        {
+            "namespace": "identity",
+            "identifier": "di-up",
+            "sid": 2900
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-base-type",
+            "sid": 2901
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-base-type",
+            "sid": 2902
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-code",
+            "sid": 2903
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-code-class",
+            "sid": 2904
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-code-detail",
+            "sid": 2905
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-mid",
+            "sid": 2906
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option",
+            "sid": 2856
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-accept",
+            "sid": 2857
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-block1",
+            "sid": 2858
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-block2",
+            "sid": 2859
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-content-format",
+            "sid": 2860
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-etag",
+            "sid": 2861
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-if-match",
+            "sid": 2862
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-if-none-match",
+            "sid": 2863
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-location-path",
+            "sid": 2864
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-location-query",
+            "sid": 2865
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-max-age",
+            "sid": 2866
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-no-response",
+            "sid": 2867
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-observe",
+            "sid": 2868
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-oscore-flags",
+            "sid": 2869
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-oscore-kid",
+            "sid": 2870
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-oscore-kidctx",
+            "sid": 2871
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-oscore-piv",
+            "sid": 2872
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-proxy-scheme",
+            "sid": 2873
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-proxy-uri",
+            "sid": 2874
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-size1",
+            "sid": 2875
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-size2",
+            "sid": 2876
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-uri-host",
+            "sid": 2877
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-uri-path",
+            "sid": 2878
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-uri-port",
+            "sid": 2879
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-option-uri-query",
+            "sid": 2880
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-tkl",
+            "sid": 2907
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-token",
+            "sid": 2908
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-type",
+            "sid": 2909
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-coap-version",
+            "sid": 2910
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-appiid",
+            "sid": 2911
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-appprefix",
+            "sid": 2912
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-base-type",
+            "sid": 2913
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-deviid",
+            "sid": 2914
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-devprefix",
+            "sid": 2915
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-flowlabel",
+            "sid": 2916
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-hoplimit",
+            "sid": 2917
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-nextheader",
+            "sid": 2918
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-payload-length",
+            "sid": 2919
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-trafficclass",
+            "sid": 2920
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-trafficclass-ds",
+            "sid": 2921
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-trafficclass-ecn",
+            "sid": 2922
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-ipv6-version",
+            "sid": 2923
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-oscore-base-type",
+            "sid": 2924
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-udp-app-port",
+            "sid": 2925
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-udp-base-type",
+            "sid": 2926
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-udp-checksum",
+            "sid": 2927
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-udp-dev-port",
+            "sid": 2928
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fid-udp-length",
+            "sid": 2929
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fl-base-type",
+            "sid": 2930
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fl-token-length",
+            "sid": 2931
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fl-variable",
+            "sid": 2932
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fragmentation-mode-ack-always",
+            "sid": 2933
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fragmentation-mode-ack-on-error",
+            "sid": 2934
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fragmentation-mode-base-type",
+            "sid": 2935
+        },
+        {
+            "namespace": "identity",
+            "identifier": "fragmentation-mode-no-ack",
+            "sid": 2936
+        },
+        {
+            "namespace": "identity",
+            "identifier": "mo-base-type",
+            "sid": 2937
+        },
+        {
+            "namespace": "identity",
+            "identifier": "mo-equal",
+            "sid": 2938
+        },
+        {
+            "namespace": "identity",
+            "identifier": "mo-ignore",
+            "sid": 2939
+        },
+        {
+            "namespace": "identity",
+            "identifier": "mo-match-mapping",
+            "sid": 2940
+        },
+        {
+            "namespace": "identity",
+            "identifier": "mo-msb",
+            "sid": 2941
+        },
+        {
+            "namespace": "identity",
+            "identifier": "nature-base-type",
+            "sid": 2942
+        },
+        {
+            "namespace": "identity",
+            "identifier": "nature-compression",
+            "sid": 2943
+        },
+        {
+            "namespace": "identity",
+            "identifier": "nature-fragmentation",
+            "sid": 2944
+        },
+        {
+            "namespace": "identity",
+            "identifier": "nature-no-compression",
+            "sid": 2945
+        },
+        {
+            "namespace": "identity",
+            "identifier": "rcs-algorithm-base-type",
+            "sid": 2946
+        },
+        {
+            "namespace": "identity",
+            "identifier": "rcs-crc32",
+            "sid": 2947
+        },
+        {
+            "namespace": "feature",
+            "identifier": "compression",
+            "sid": 2948
+        },
+        {
+            "namespace": "feature",
+            "identifier": "fragmentation",
+            "sid": 2949
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc",
+            "sid": 2572
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule",
+            "sid": 2595
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/ack-behavior",
+            "sid": 2573
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/direction",
+            "sid": 2574
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/dtag-size",
+            "sid": 2575
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry",
+            "sid": 2618
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/comp-decomp-action",
+            "sid": 2619
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/comp-decomp-action-value",
+            "sid": 2620
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/comp-decomp-action-value/index",
+            "sid": 2621
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/comp-decomp-action-value/value",
+            "sid": 2622
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/direction-indicator",
+            "sid": 2623
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/field-id",
+            "sid": 2624
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/field-length",
+            "sid": 2625
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/field-position",
+            "sid": 2626
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/matching-operator",
+            "sid": 2627
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/matching-operator-value",
+            "sid": 2628
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/matching-operator-value/index",
+            "sid": 2629
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/matching-operator-value/value",
+            "sid": 2630
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/target-value",
+            "sid": 2631
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/target-value/index",
+            "sid": 2632
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/entry/target-value/value",
+            "sid": 2633
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/fcn-size",
+            "sid": 2576
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/fragmentation-mode",
+            "sid": 2577
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/inactivity-timer",
+            "sid": 2578
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/inactivity-timer/ticks-duration",
+            "sid": 2579
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/inactivity-timer/ticks-numbers",
+            "sid": 2580
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/l2-word-size",
+            "sid": 2581
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/max-ack-requests",
+            "sid": 2582
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/max-interleaved-frames",
+            "sid": 2583
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/maximum-packet-size",
+            "sid": 2584
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/rcs-algorithm",
+            "sid": 2585
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/retransmission-timer",
+            "sid": 2586
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/retransmission-timer/ticks-duration",
+            "sid": 2587
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/retransmission-timer/ticks-numbers",
+            "sid": 2588
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/rule-id-length",
+            "sid": 2596
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/rule-id-value",
+            "sid": 2597
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/rule-nature",
+            "sid": 2598
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/tile-in-all-1",
+            "sid": 2589
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/tile-size",
+            "sid": 2590
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/w-size",
+            "sid": 2591
+        },
+        {
+            "namespace": "data",
+            "identifier": "/ietf-schc:schc/rule/window-size",
+            "sid": 2592
+        }
+    ],
+    "key-mapping": {}
+}

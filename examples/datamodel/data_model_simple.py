@@ -1,0 +1,37 @@
+import sys, os 
+# insert at 1, 0 is the script path (or '' in REPL)
+
+sys.path.insert(1, '../../src/')
+
+import gen_rulemanager as RM
+
+import pprint
+import binascii
+import base64
+
+import cbor2 as cbor
+
+#from yangson import DataModel
+
+rm    = RM.RuleManager()
+rm.Add(file="test-rule.json", device="test:device1")
+rm.Print()
+
+rm.add_sid_file("ietf-schc@2025-11-24-ext.sid")
+rm.add_sid_file("ietf-schc-quentin@2025-03-21.sid")
+
+ycbor = rm.to_coreconf()
+print (binascii.hexlify(ycbor))
+pprint.pprint(cbor.loads(ycbor))
+
+yr = rm.convert_to_json (cbor.loads(ycbor))
+pprint.pprint(yr)
+
+# Store ycbor in a file with .cbor extension
+cbor_filename = "test-rule.json".replace(".json", ".cbor")
+with open(cbor_filename, "wb") as f:
+    f.write(ycbor)
+
+yr = rm.convert_to_json (cbor.loads(ycbor))
+pprint.pprint(yr)
+
