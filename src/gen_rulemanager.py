@@ -262,7 +262,7 @@ Given the first bits received from the LPWAN, returns either a fragmentation or 
 
 from operator import mod
 
-from click import option
+#from click import option
 from gen_base_import import *
 from copy import deepcopy
 from gen_parameters import *
@@ -1011,23 +1011,34 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
             del(sid_values["key-mapping"])
 
         pprint.pprint(sid_values)
-        for e in sid_values["ietf-sid-file:sid-file"]["item"]:
-            print (e['sid'], type(e['sid']))
-            if type(e['sid']) is str:
-                e['sid'] = int(e['sid'], 0)
-            print (e['sid'], type(e['sid']))
+        if "ietf-sid-file:sid-file" in sid_values:
+            for e in sid_values["ietf-sid-file:sid-file"]["item"]:
+                print (e['sid'], type(e['sid']))
+                if type(e['sid']) is str:
+                    e['sid'] = int(e['sid'], 0)
+                print (e['sid'], type(e['sid']))
+            self._sid_info.append(sid_values["ietf-sid-file:sid-file"]['item'])
+        elif "item" in sid_values:
+            for e in sid_values["item"]:
+                print (e['sid'], type(e['sid']))
+                if type(e['sid']) is str:
+                    e['sid'] = int(e['sid'], 0)
+                print (e['sid'], type(e['sid']))
+            self._sid_info.append(sid_values['item'])
+
+        else:
+            raise ValueError("Not a valid SID file")
 
 
-        self._sid_info.append(sid_values)
 
     def sid_search_for(self, name, space="data"):
 
         for s in self._sid_info:
-            for e in s["ietf-sid-file:sid-file"]["item"]:
+            for e in s:
                 #print ("--->", e)
                 if e["identifier"] == name and e["namespace"]==space:
                     return e["sid"]
-        print (name, "not found in SID files")
+        #print (name, "not found in SID files")
         return None 
 
     def sid_search_sid(self, value, short=False):
@@ -1437,160 +1448,115 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
 
                     nb_entry = 0
                     rule_content = b''
+                    entry_index = 0
+
                     for e in rule[T_COMP]:
                         nb_elm = 0
                         nb_entry += 1
 
                         print(e[T_FID])
+
+                        entry_cbor = \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/entry-index", space="data") - entry_sid) + \
+                            cbor.dumps(entry_index)
+                        
+                        print(binascii.hexlify(entry_cbor))
+                        entry_index += 1
+                        nb_elm += 1
+
                         if e[T_FID].find("COAP.OPTION")==0:
-                            print ("Entry Option Space")
-                            # we have an universal option
+                            space_id = self.sid_search_for(name="space-id-coap", space="identity") 
+                            option_id = int(re.search(r'\((\d+)\)', e[T_FID]).group(1))
+                        else:
+                            space_id = 0
+                            option_id = self.sid_search_for(name=YANG_ID[e[T_FID]][1], space="identity")
 
-                            # /ietf-schc:schc/rule/universal-option-entry/space-id
-                            entry_cbor = \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/universal-option-entry/space-id", space="data") - entry_sid) + \
-                                cbor.dumps(self.sid_search_for(name="space-id-coap", space="identity")) 
-                            nb_elm += 1
+                        entry_cbor += \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/space-id", space="data") - entry_sid) + \
+                            cbor.dumps(space_id) +\
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/field-id", space="data") - entry_sid) + \
+                            cbor.dumps(option_id)
+                        print(binascii.hexlify(entry_cbor))
+                        nb_elm += 2
 
-                            print ("@", nb_elm, binascii.hexlify(entry_cbor))
-
-                            #  /ietf-schc:schc/rule/universal-option-entry/option-id,
-                            option_number = int(re.search(r'\((\d+)\)', e[T_FID]).group(1))
+                        l=e[T_FL]
+                        if type(l) == int:
                             entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/universal-option-entry/option-id", space="data") - entry_sid) + \
-                                cbor.dumps(option_number) 
-                            nb_elm += 1
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/field-length", space="data") - entry_sid) + \
+                                cbor.dumps(l)
+                        elif type(l) == str:
+                            print("Field length is a string:", l)
+                            if l.find("length-byte") == 0:
 
-                            print ("@", nb_elm, binascii.hexlify(entry_cbor))
-
-                            # /ietf-schc:schc/rule/universal-option-entry/field-length
-                            l=e[T_FL]
-                            if type(l) == int:
-                                entry_cbor += \
-                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/universal-option-entry/field-length", space="data") - entry_sid) + \
-                                    cbor.dumps(l)
-                            elif type(l) == str:
-                                entry_cbor += \
-                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/universal-option-entry/field-length", space="data") - entry_sid) + \
-                                    struct.pack("!BB", 0xD8, 45) + \
-                                    cbor.dumps(self.sid_search_for(name=YANG_ID[l][1], space="identity"))
-                            else:
-                                raise ValueError("unknown field length value")
-                            nb_elm += 1
-                            
-                            print ("@", nb_elm, binascii.hexlify(entry_cbor))
-                            
-                            # /ietf-schc:schc/rule/universal-option-entry/field-position
-                            entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/universal-option-entry/field-position", space="data") - entry_sid) + \
-                                struct.pack('!B', e[T_FP])
-                            nb_elm += 1                           #
-                            print ("@", nb_elm, binascii.hexlify(entry_cbor))
-
-                            #/ietf-schc:schc/rule/universal-option-entry/direction-indicator
-                            entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/universal-option-entry/direction-indicator", space="data") - entry_sid) + \
-                                cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_DI]][1], space="identity")) 
-                            nb_elm += 1
-
-                            print ("@", nb_elm, binascii.hexlify(entry_cbor))
-
-                            # /ietf-schc:schc/rule/universal-option-entry/matching-operator
-
-                            entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/universal-option-entry/matching-operator", space="data") - entry_sid) + \
-                                cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_MO]][1], space="identity")) 
-                            nb_elm += 1
-
-                            print ("@", nb_elm, binascii.hexlify(entry_cbor))
-
-                            #/ietf-schc:schc/rule/ietf-schc-opt:entry-option-space/matching-operator-value
-                            if T_MO_VAL in e:
-                                mo_val_cbor = dictify_cbor(e[T_MO_VAL], "/ietf-schc:schc/rule/universal-option-entry/matching-operator-value")
-                                entry_cbor += \
-                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/universal-option-entry/matching-operator-value", space="data") - entry_sid) + \
-                                    mo_val_cbor
-                                nb_elm += 1
-
-                            print ("@", nb_elm, binascii.hexlify(entry_cbor))
-
-                            #/ietf-schc:schc/rule/universal-option-entry/comp-decomp-action
-                            entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/universal-option-entry/comp-decomp-action", space="data") - entry_sid) + \
-                                cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_CDA]][1], space="identity")) 
-                            nb_elm += 1         
-                            print ("@", nb_elm, binascii.hexlify(entry_cbor))
-
-                            # /ietf-schc:schc/rule/universal-option-entry/target-value
-
-                            if T_TV in e and e[T_TV] != None:
-                                tv_cbor = dictify_cbor(e[T_TV], "/ietf-schc:schc/rule/universal-option-entry/target-value")
-
-                                entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/universal-option-entry/target-value", space="data") - entry_sid) + \
-                                tv_cbor
-                                nb_elm += 1
-
-                            print ("@", nb_elm, binascii.hexlify(entry_cbor))
- 
-                        else: # not an universal option
-                            entry_cbor = \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/field-id", space="data") - entry_sid) + \
-                                cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_FID]][1], space="identity")) 
-                            nb_elm += 1
-
-                            l=e[T_FL]
-                            if type(l) == int:
                                 entry_cbor += \
                                     cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/field-length", space="data") - entry_sid) + \
-                                    cbor.dumps(l)
-                            elif type(l) == str:
+                                    struct.pack("!BB", 0xD8, 45) + \
+                                    cbor.dumps(self.sid_search_for(name="fl-length-bytes", space="identity")) 
+
+                                # add option
+                                match = re.search(r"\((\d+)\)", l)
+                                print("length-byte option:", match.group(1))
+                                entry_cbor += \
+                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/field-length-value", space="data") - entry_sid) + \
+                                    cbor.dumps(int(match.group(1))) 
+                                nb_elm += 1
+
+                            else: # var and tkl
                                 entry_cbor += \
                                     cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/field-length", space="data") - entry_sid) + \
                                     struct.pack("!BB", 0xD8, 45) + \
                                     cbor.dumps(self.sid_search_for(name=YANG_ID[l][1], space="identity")) 
 
-                                #raise ValueError("Field ID not defined")
-                            else:
-                                raise ValueError("unknown field length value")
+                            #raise ValueError("Field ID not defined")
+                        else:
+                            raise ValueError("unknown field length value")
+                        
+                        print(binascii.hexlify(entry_cbor))
+                        nb_elm += 1
+
+                        entry_cbor += \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/field-position", space="data") - entry_sid) + \
+                            struct.pack('!B', e[T_FP])
+                        print(binascii.hexlify(entry_cbor))
+                        nb_elm += 1
+
+                        entry_cbor += \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/direction-indicator", space="data") - entry_sid) + \
+                            cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_DI]][1], space="identity")) 
+                        print(binascii.hexlify(entry_cbor))
+                        nb_elm += 1
+
+                        entry_cbor += \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/matching-operator", space="data") - entry_sid) + \
+                            cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_MO]][1], space="identity")) 
+                        print(binascii.hexlify(entry_cbor))
+                        nb_elm += 1
+
+                        if T_MO_VAL in e:
+                            mo_val_cbor = dictify_cbor(e[T_MO_VAL], "/ietf-schc:schc/rule/entry/matching-operator-value")
+                            entry_cbor += \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/matching-operator-value", space="data") - entry_sid) + \
+                                mo_val_cbor
+                            print(binascii.hexlify(entry_cbor))
                             nb_elm += 1
+
+                        entry_cbor += \
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/comp-decomp-action", space="data") - entry_sid) + \
+                            cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_CDA]][1], space="identity")) 
+                        print(binascii.hexlify(entry_cbor))
+                        nb_elm += 1
+
+                        if T_TV in e and e[T_TV] != None:
+                            tv_cbor = dictify_cbor(e[T_TV], "/ietf-schc:schc/rule/entry/target-value")
 
                             entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/field-position", space="data") - entry_sid) + \
-                                struct.pack('!B', e[T_FP])
-                            nb_elm += 1
-    
-                            entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/direction-indicator", space="data") - entry_sid) + \
-                                cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_DI]][1], space="identity")) 
+                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/target-value", space="data") - entry_sid) + \
+                            tv_cbor
                             nb_elm += 1
 
-                            entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/matching-operator", space="data") - entry_sid) + \
-                                cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_MO]][1], space="identity")) 
-                            nb_elm += 1
-
-                            if T_MO_VAL in e:
-                                mo_val_cbor = dictify_cbor(e[T_MO_VAL], "/ietf-schc:schc/rule/entry/matching-operator-value")
-                                entry_cbor += \
-                                    cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/matching-operator-value", space="data") - entry_sid) + \
-                                    mo_val_cbor
-                                nb_elm += 1
-
-                            entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/comp-decomp-action", space="data") - entry_sid) + \
-                                cbor.dumps(self.sid_search_for(name=YANG_ID[e[T_CDA]][1], space="identity")) 
-                            nb_elm += 1
-
-                            if T_TV in e and e[T_TV] != None:
-                                tv_cbor = dictify_cbor(e[T_TV], "/ietf-schc:schc/rule/entry/target-value")
-
-                                entry_cbor += \
-                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/target-value", space="data") - entry_sid) + \
-                                tv_cbor
-                                nb_elm += 1
-    
                         entry_cbor = self.cbor_header (0b101_00000, nb_elm) + entry_cbor # header MAP and size
+
+                        print ("Entry CBOR:", binascii.hexlify(entry_cbor))
                         rule_content += entry_cbor
 
                     rule_content = b'\xA4' + \
@@ -1602,6 +1568,8 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                         cbor.dumps(rule[T_RULEIDLENGTH]) +\
                         cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-nature", space="data") - rule_sid) +\
                         cbor.dumps(self.sid_search_for(name= "nature-compression", space="identity")) 
+                    
+                    print ("rule content:", binascii.hexlify(rule_content))
                 elif T_FRAG in rule:
                     nb_elm = 3
                     rule_content = \
@@ -1644,6 +1612,7 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                     nb_elm += 1
                     
                     rule_content = self.cbor_header(0b101_00000, nb_elm) + rule_content
+
                 elif T_NO_COMP in rule:
                     rule_content = rule_content = self.cbor_header(0b101_00000, 3) +\
                         cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/rule-id-value", space="data") - rule_sid) +\
@@ -1654,6 +1623,8 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                         cbor.dumps(self.sid_search_for(name= "nature-no-compression", space="identity")) 
                 else:
                     raise ValueError("unkwon rule")
+
+                print ("Rule content:", binascii.hexlify(rule_content))
 
                 full_rules += rule_content        
             
