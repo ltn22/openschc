@@ -13,8 +13,14 @@ import cbor2 as cbor
 
 #from yangson import DataModel
 
+if len(sys.argv) < 2:
+    print("Usage: python data_model_simple.py <rule-file.json>")
+    sys.exit(1)
+
+rule_file = sys.argv[1]
+
 rm    = RM.RuleManager()
-rm.Add(file="test-rule.json", device="test:device1")
+rm.Add(file=rule_file, device="test:device1")
 rm.Print()
 
 rm.add_sid_file("ietf-schc-unified.sid")
@@ -28,7 +34,7 @@ pprint.pprint(cbor.loads(ycbor))
 #pprint.pprint(yr)
 
 # Store ycbor in a file with .cbor extension
-cbor_filename = "test-rule.json".replace(".json", ".sor")
+cbor_filename = rule_file.replace(".json", ".sor")
 with open(cbor_filename, "wb") as f:
     f.write(ycbor)
 
