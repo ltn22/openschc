@@ -1467,17 +1467,21 @@ Some conversion capabilities may not works. see http://github.com/ltn22/pyang"""
                         if e[T_FID].find("COAP.OPTION")==0:
                             space_id = self.sid_search_for(name="space-id-coap", space="identity") 
                             option_id = int(re.search(r'\((\d+)\)', e[T_FID]).group(1))
-                        else:
-                            space_id = 0
-                            option_id = self.sid_search_for(name=YANG_ID[e[T_FID]][1], space="identity")
 
-                        entry_cbor += \
-                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/space-id", space="data") - entry_sid) + \
-                            cbor.dumps(space_id) +\
-                            cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/field-id", space="data") - entry_sid) + \
-                            cbor.dumps(option_id)
-                        print(binascii.hexlify(entry_cbor))
-                        nb_elm += 2
+                            entry_cbor += \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/space-id", space="data") - entry_sid) + \
+                                cbor.dumps(space_id) +\
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/universal-value", space="data") - entry_sid) + \
+                                cbor.dumps(option_id)
+                            print(binascii.hexlify(entry_cbor))
+                            nb_elm += 2
+                        else: # Field ID
+                            field_id = self.sid_search_for(name=YANG_ID[e[T_FID]][1], space="identity")
+                            entry_cbor += \
+                                cbor.dumps(self.sid_search_for(name="/ietf-schc:schc/rule/entry/field-id", space="data") - entry_sid) + \
+                                cbor.dumps(field_id) 
+                            nb_elm += 1
+
 
                         l=e[T_FL]
                         if type(l) == int:

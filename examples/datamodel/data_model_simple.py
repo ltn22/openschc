@@ -23,8 +23,7 @@ rm    = RM.RuleManager()
 rm.Add(file=rule_file, device="test:device1")
 rm.Print()
 
-rm.add_sid_file("ietf-schc-unified.sid")
-rm.add_sid_file("ietf-schc-quentin@2025-03-21.sid")
+rm.add_sid_file("ietf-schc@2026-04-05.sid")
 
 ycbor = rm.to_coreconf()
 print (binascii.hexlify(ycbor))
