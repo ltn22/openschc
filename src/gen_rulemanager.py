@@ -333,7 +333,9 @@ FIELD__DEFAULT_PROPERTY = {
     T_COAP_OPT_NO_RESP     : {"FL": "var", "TYPE": int, "ALGO": "COAP_OPTION"},
     T_O_DELTA              : {"FL": 4, "TYPE": int, "ALGO": "COAP_OPTION"},
     T_O_LENGTH             : {"FL": 4, "TYPE": int, "ALGO": "COAP_OPTION"},
-    T_O_VALUE              : {"FL": "var", "TYPE": bytes, "ALGO": "COAP_OPTION"}
+    T_O_VALUE              : {"FL": "var", "TYPE": bytes, "ALGO": "COAP_OPTION"},
+    T_UNUSED                : {"FL": "var", "TYPE": bytes, "ALGO": "DIRECT"},
+    T_PAYLOAD               : {"FL": "var", "TYPE": bytes, "ALGO": "DIRECT"}
 }
 
 

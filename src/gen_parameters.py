@@ -33,7 +33,7 @@ T_PROTO_ICMPV6 = "ICMPV6"
 # ICMPv6 header fields
 T_ICMPV6_TYPE = "ICMPV6.TYPE"
 T_ICMPV6_CODE = "ICMPV6.CODE"
-T_ICMPV6_CKSUM = "ICMPV6.CHECKSUM"
+T_ICMPV6_CKSUM = "ICMPV6.CKSUM"
 T_ICMPV6_IDENT = "ICMPV6.IDENT"
 T_ICMPV6_SEQNO = "ICMPV6.SEQNO"
 T_ICMPV6_UNUSED = "ICMPV6.UNUSED"
@@ -81,6 +81,9 @@ T_COAP_OPT_PROXY_SCHEME =  "COAP.PROXY-SCHEME"
 T_COAP_OPT_SIZE1 =  "COAP.SIZE1"
 T_COAP_OPT_NO_RESP = "COAP.NO-RESPONSE"
 T_COAP_OPT_END = "COAP.End"
+
+T_UNUSED = "UNUSED"
+T_PAYLOAD = "PAYLOAD"
 
 T_FUNCTION_VAR = "var"
 T_FUNCTION_TKL = "tkl"
@@ -299,7 +302,10 @@ YANG_ID = {
     # for quentin extension
     T_O_DELTA :[SID+300, "fid-coap-delta-types"],
     T_O_LENGTH : [SID+301, "fid-coap-length"],
-    T_O_VALUE : [SID+302, "fid-coap-value"]
+    T_O_VALUE : [SID+302, "fid-coap-value"],
+
+    T_UNUSED : [SID+400, "fid-unused"],
+    T_PAYLOAD : [SID+401, "fid-payload"]
 }
 
 import ipaddress
