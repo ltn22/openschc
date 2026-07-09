@@ -80,6 +80,13 @@ T_COAP_OPT_PROXY_URI =  "COAP.PROXY-URI"
 T_COAP_OPT_PROXY_SCHEME =  "COAP.PROXY-SCHEME"
 T_COAP_OPT_SIZE1 =  "COAP.SIZE1"
 T_COAP_OPT_NO_RESP = "COAP.NO-RESPONSE"
+
+T_OSCORE_FLAGS = "COAP.OSCORE_FLAGS"
+T_OSCORE_FLAGS_FLAGS = "COAP.OSCORE_FLAGS_FLAGS"
+T_OSCORE_FLAGS_N = "COAP.OSCORE_FLAGS_N"
+T_OSCORE_KID = "COAP.OSCORE_KID"
+T_OSCORE_KIDCTX = "COAP.OSCORE_KID_CTX"
+T_OSCORE_PIV = "COAP.OSCORE_PIV"
 T_COAP_OPT_END = "COAP.End"
 
 T_UNUSED = "UNUSED"
@@ -89,6 +96,7 @@ T_FUNCTION_VAR = "var"
 T_FUNCTION_TKL = "tkl"
 
 T_FUNCTION_VAR = "var"
+T_FUNCTION_VARBIT = "var_bit"
 T_FUNCTION_TKL = "tkl"
 
 
@@ -205,10 +213,12 @@ YANG_ID = {
     T_COAP_OPT_MAX_AGE : [SID+37, "fid-coap-option-max-age"],
     T_COAP_OPT_NO_RESP : [SID+38, "fid-coap-option-no-response"],
     T_COAP_OPT_OBS : [SID+39, "fid-coap-option-observe"],
-    "TBD":                    [SID+40, "fid-coap-option-oscore-flags"],
-    "TBD" : [SID+41, "fid-coap-option-oscore-kid"],
-    "TBD" : [SID+42, "fid-coap-option-oscore-kidctx"],
-    "TBD" : [SID+43, "fid-coap-option-oscore-piv"],
+    T_OSCORE_FLAGS : [SID+40, "fid-coap-option-oscore-flags"],
+    T_OSCORE_FLAGS_FLAGS : [SID+41, "fid-coap-option-oscore-flags-flags"],
+    T_OSCORE_FLAGS_N : [SID+42, "fid-coap-option-oscore-flags-n"],
+    T_OSCORE_KID : [SID+41, "fid-coap-option-oscore-kid"],
+    T_OSCORE_KIDCTX : [SID+42, "fid-coap-option-oscore-kidctx"],
+    T_OSCORE_PIV : [SID+43, "fid-coap-option-oscore-piv"],
     T_COAP_OPT_PROXY_SCHEME : [SID+44, "fid-coap-option-proxy-scheme"],
     T_COAP_OPT_PROXY_URI : [SID+45, "fid-coap-option-proxy-uri"],
     T_COAP_OPT_SIZE1 : [SID+46, "fid-coap-option-size1"],
@@ -243,6 +253,7 @@ YANG_ID = {
     "TBD" : [SID+74, "fl-base-type"],      
     T_FUNCTION_TKL : [SID+75, "fl-token-length"],
     T_FUNCTION_VAR : [SID+76, "fl-variable"],
+    T_FUNCTION_VARBIT : [SID+77, "fl-variable-bit"],
     T_FRAG_ACK_ALWAYS : [SID+77, "fragmentation-mode-ack-always"],
     T_FRAG_ACK_ON_ERROR : [SID+78, "fragmentation-mode-ack-on-error"],
     "TBD" : [SID+79, "fragmentation-mode-base-type"],
